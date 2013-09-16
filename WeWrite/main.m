@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 #import "AppDelegate.h"
+#import <Collabrify/Collabrify.h>
 
 int main(int argc, char *argv[])
 {
