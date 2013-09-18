@@ -9,7 +9,8 @@
 #import "ViewController.h"
 
 @interface ViewController ()
-
+@property (weak, nonatomic) IBOutlet UITextView *InputBox;
+- (BOOL)textView:(UITextView *)InputBox shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
 @end
 
 @implementation ViewController
@@ -35,4 +36,11 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (BOOL)textView:(UITextView *)InputBox shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+{
+    NSString* tempStr=@"";
+    tempStr=[[InputBox text] stringByAppendingString:text];
+    NSLog(@"%@", tempStr);
+    return YES;
+}
 @end

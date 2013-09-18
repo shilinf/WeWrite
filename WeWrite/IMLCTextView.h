@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface IMLCTextView : UITextView
+@interface IMLCTextView : UITextView <UITextViewDelegate>
 
 @end

@@ -9,5 +9,16 @@
 #import <Foundation/Foundation.h>
 
 @interface OneEvent : NSObject
+{
+    Boolean operation;
+    int cursorLocation;
+    int length;
+    NSString* content;
+}
 
+- (id) initWithOperation:(Boolean)aOperation CursorLocation:(int)aCursor Length:(int)aLength Content:(NSString*) aContent;
+- (Boolean) getOperation;
+- (int) getCursorLocation;
+- (int) getLength;
+- (NSString*) getContent;
 @end

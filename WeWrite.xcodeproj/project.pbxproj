@@ -55,6 +55,8 @@
 		61516F8917DFB049001ED690 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 61516F8817DFB049001ED690 /* libz.dylib */; };
 		615D977D17E7C6F2007C3A8F /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 615D977C17E7C6F2007C3A8F /* Storyboard.storyboard */; };
 		615D978017E7C73E007C3A8F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 615D977F17E7C73E007C3A8F /* ViewController.m */; };
+		615D978317E7D315007C3A8F /* IMLCTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 615D978217E7D315007C3A8F /* IMLCTextView.m */; };
+		615D978617E7DEAA007C3A8F /* OneEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 615D978517E7DEAA007C3A8F /* OneEvent.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -161,6 +163,10 @@
 		615D977C17E7C6F2007C3A8F /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		615D977E17E7C73E007C3A8F /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		615D977F17E7C73E007C3A8F /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		615D978117E7D315007C3A8F /* IMLCTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMLCTextView.h; sourceTree = "<group>"; };
+		615D978217E7D315007C3A8F /* IMLCTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMLCTextView.m; sourceTree = "<group>"; };
+		615D978417E7DEAA007C3A8F /* OneEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneEvent.h; sourceTree = "<group>"; };
+		615D978517E7DEAA007C3A8F /* OneEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneEvent.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -218,6 +224,10 @@
 				615D977C17E7C6F2007C3A8F /* Storyboard.storyboard */,
 				615D977E17E7C73E007C3A8F /* ViewController.h */,
 				615D977F17E7C73E007C3A8F /* ViewController.m */,
+				615D978117E7D315007C3A8F /* IMLCTextView.h */,
+				615D978217E7D315007C3A8F /* IMLCTextView.m */,
+				615D978417E7DEAA007C3A8F /* OneEvent.h */,
+				615D978517E7DEAA007C3A8F /* OneEvent.m */,
 				61516F0817DFAABC001ED690 /* Collabrify.bundle */,
 				61516F0D17DFAB18001ED690 /* Google Protocol Buffers */,
 				61516F0917DFAABC001ED690 /* Collabrify.framework */,
@@ -472,6 +482,8 @@
 				61516F8417DFAB19001ED690 /* wire_format.cc in Sources */,
 				61516F8517DFAB19001ED690 /* wire_format_lite.cc in Sources */,
 				615D978017E7C73E007C3A8F /* ViewController.m in Sources */,
+				615D978317E7D315007C3A8F /* IMLCTextView.m in Sources */,
+				615D978617E7DEAA007C3A8F /* OneEvent.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
