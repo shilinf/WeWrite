@@ -9,8 +9,7 @@
 #import "ViewController.h"
 
 @interface ViewController ()
-@property (weak, nonatomic) IBOutlet UITextView *InputBox;
-- (BOOL)textView:(UITextView *)InputBox shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text;
+@property (weak, nonatomic) IBOutlet IMLCTextView *InputBox;
 @end
 
 @implementation ViewController
@@ -19,6 +18,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
+        
         // Custom initialization
     }
     return self;
@@ -36,11 +36,4 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (BOOL)textView:(UITextView *)InputBox shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-    NSString* tempStr=@"";
-    tempStr=[[InputBox text] stringByAppendingString:text];
-    NSLog(@"%@", tempStr);
-    return YES;
-}
 @end

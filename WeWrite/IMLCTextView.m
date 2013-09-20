@@ -7,6 +7,8 @@
 //
 
 #import "IMLCTextView.h"
+#import "Events.h"
+#import "OneEvent.h"
 
 @implementation IMLCTextView
 
@@ -44,8 +46,19 @@
     return [super canPerformAction:action withSender:sender];
 }
 
-- (BOOL)textView:(UITextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
+- (BOOL)textView:(IMLCTextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+    NSString* tempStr=@"";
+    tempStr=[[textView text] stringByAppendingString:text];
+    //NSLog(@"%@", tempStr);
+    //NSLog(@"%d", range.location);
+    NSLog(@"%d", range.length);
+    OneEvent* event = [[OneEvent alloc]initWithOperation:range.length CursorLocation:range.location Length:1 Content:[tempStr substringWithRange:NSMakeRange([tempStr length] - 1, 1)]];
+    NSLog(@"%@", event.getContent);
+
+    Events* allEvents;
+    [allEvents push:event];
+    
     if (range.length <= 1)
     {
         return YES;

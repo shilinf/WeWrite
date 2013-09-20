@@ -22,6 +22,8 @@
     return self;
 }
 
+
+
 - (Boolean) getOperation {
     return operation;
 }

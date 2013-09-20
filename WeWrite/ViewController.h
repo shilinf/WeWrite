@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "IMLCTextView.h"
 
 @interface ViewController : UIViewController
 @end

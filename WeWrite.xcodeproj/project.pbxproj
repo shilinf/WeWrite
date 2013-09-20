@@ -57,6 +57,8 @@
 		615D978017E7C73E007C3A8F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 615D977F17E7C73E007C3A8F /* ViewController.m */; };
 		615D978317E7D315007C3A8F /* IMLCTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 615D978217E7D315007C3A8F /* IMLCTextView.m */; };
 		615D978617E7DEAA007C3A8F /* OneEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 615D978517E7DEAA007C3A8F /* OneEvent.m */; };
+		615D978917EA67BB007C3A8F /* Events.m in Sources */ = {isa = PBXBuildFile; fileRef = 615D978817EA67BB007C3A8F /* Events.m */; };
+		615D979217EBF3BE007C3A8F /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 615D979117EBF3BE007C3A8F /* Stack.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -167,6 +169,10 @@
 		615D978217E7D315007C3A8F /* IMLCTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMLCTextView.m; sourceTree = "<group>"; };
 		615D978417E7DEAA007C3A8F /* OneEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneEvent.h; sourceTree = "<group>"; };
 		615D978517E7DEAA007C3A8F /* OneEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneEvent.m; sourceTree = "<group>"; };
+		615D978717EA67BB007C3A8F /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
+		615D978817EA67BB007C3A8F /* Events.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Events.m; sourceTree = "<group>"; };
+		615D979017EBF3BE007C3A8F /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
+		615D979117EBF3BE007C3A8F /* Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stack.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -228,6 +234,10 @@
 				615D978217E7D315007C3A8F /* IMLCTextView.m */,
 				615D978417E7DEAA007C3A8F /* OneEvent.h */,
 				615D978517E7DEAA007C3A8F /* OneEvent.m */,
+				615D978717EA67BB007C3A8F /* Events.h */,
+				615D978817EA67BB007C3A8F /* Events.m */,
+				615D979017EBF3BE007C3A8F /* Stack.h */,
+				615D979117EBF3BE007C3A8F /* Stack.m */,
 				61516F0817DFAABC001ED690 /* Collabrify.bundle */,
 				61516F0D17DFAB18001ED690 /* Google Protocol Buffers */,
 				61516F0917DFAABC001ED690 /* Collabrify.framework */,
@@ -484,6 +494,8 @@
 				615D978017E7C73E007C3A8F /* ViewController.m in Sources */,
 				615D978317E7D315007C3A8F /* IMLCTextView.m in Sources */,
 				615D978617E7DEAA007C3A8F /* OneEvent.m in Sources */,
+				615D978917EA67BB007C3A8F /* Events.m in Sources */,
+				615D979217EBF3BE007C3A8F /* Stack.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
