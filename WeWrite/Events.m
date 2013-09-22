@@ -10,62 +10,51 @@
 
 
 @implementation Events
-static Events* _sharedEvents = nil;
-static Stack* allEvents = nil;
 
-+(Events*)sharedEvents
-{
-    @synchronized([Events class])
-    {
-        if (!_sharedEvents)
-            [[self alloc] init];
-        return _sharedEvents;
-    }
-    return nil;
-}
+static NSMutableArray* allEvents;
 
-
-+(id)alloc
-{
-    @synchronized([Events class])
-    {
-        NSAssert(_sharedEvents == nil, @"Attempted to allocate a second instance of a singleton.");
-        _sharedEvents = [super alloc];
-        return _sharedEvents;
-    }
-    return nil;
++ (id)sharedEvents {
+    static Events *sharedEvents = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        sharedEvents = [[self alloc] init];
+    });
+    return sharedEvents;
 }
 
 -(id)init {
-    self = [super init];
-    if (self != nil) {
-        s_array = [[NSMutableArray alloc] init];
+    if (self = [super init]) {
+        allEvents = [[NSMutableArray alloc] init];
     }
     return self;
 }
 
 -(void) push:(id)oneObject
 {
-    [s_array addObject:oneObject];
+    [allEvents addObject:oneObject];
+    //NSLog(@"%d", [allEvents count]);
+    //NSLog(@"%@", oneObject);
 }
 
 -(id) pop
 {
     id item = nil;
-    if ([s_array count] != 0) {
-        item = [s_array lastObject];
-        [s_array removeLastObject];
+    //NSLog(@"%d", [allEvents count]);
+
+    if ([allEvents count] != 0) {
+        item = [allEvents lastObject];
+        [allEvents removeLastObject];
     }
+    //NSLog(@"%d", [allEvents count]);
     return item;
 }
 -(BOOL)empty
 {
-    if([s_array count] != 0) {
+    if([allEvents count] != 0) {
         return false;
     }
     else {
         return true;
     }
 }
-
 @end

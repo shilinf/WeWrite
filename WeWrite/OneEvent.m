@@ -10,7 +10,7 @@
 
 @implementation OneEvent
 
-- (id) initWithOperation:(Boolean)aOperation CursorLocation:(int)aCursor Length:(int)aLength Content:(NSString*) aContent
+- (id) initWithOperation:(BOOL)aOperation CursorLocation:(int)aCursor Length:(int)aLength Content:(NSString*) aContent
 {
     self = [super init];
     if (self) {
@@ -24,9 +24,14 @@
 
 
 
-- (Boolean) getOperation {
+- (BOOL) getOperation {
     return operation;
 }
+
+- (void) modifyOperation{
+    operation = ~operation;
+}
+
 
 - (int) getLength {
     return length;

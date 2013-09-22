@@ -10,14 +10,15 @@
 
 @interface OneEvent : NSObject
 {
-    Boolean operation;
+    BOOL operation;
     int cursorLocation;
     int length;
     NSString* content;
 }
 
-- (id) initWithOperation:(Boolean)aOperation CursorLocation:(int)aCursor Length:(int)aLength Content:(NSString*) aContent;
-- (Boolean) getOperation;
+- (id) initWithOperation:(BOOL)aOperation CursorLocation:(int)aCursor Length:(int)aLength Content:(NSString*) aContent;
+- (BOOL) getOperation;
+- (void) modifyOperation;
 - (int) getCursorLocation;
 - (int) getLength;
 - (NSString*) getContent;

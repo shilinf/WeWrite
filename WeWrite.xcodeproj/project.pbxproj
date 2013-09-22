@@ -59,6 +59,8 @@
 		615D978617E7DEAA007C3A8F /* OneEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 615D978517E7DEAA007C3A8F /* OneEvent.m */; };
 		615D978917EA67BB007C3A8F /* Events.m in Sources */ = {isa = PBXBuildFile; fileRef = 615D978817EA67BB007C3A8F /* Events.m */; };
 		615D979217EBF3BE007C3A8F /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 615D979117EBF3BE007C3A8F /* Stack.m */; };
+		61C38A2F17EDEDC700D795DC /* RedoStack.m in Sources */ = {isa = PBXBuildFile; fileRef = 61C38A2E17EDEDC700D795DC /* RedoStack.m */; };
+		61C38A3217EE4FA500D795DC /* WeWriteProtocal.proto in Resources */ = {isa = PBXBuildFile; fileRef = 61C38A3117EE4FA500D795DC /* WeWriteProtocal.proto */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -173,6 +175,9 @@
 		615D978817EA67BB007C3A8F /* Events.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Events.m; sourceTree = "<group>"; };
 		615D979017EBF3BE007C3A8F /* Stack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Stack.h; sourceTree = "<group>"; };
 		615D979117EBF3BE007C3A8F /* Stack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Stack.m; sourceTree = "<group>"; };
+		61C38A2D17EDEDC700D795DC /* RedoStack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RedoStack.h; sourceTree = "<group>"; };
+		61C38A2E17EDEDC700D795DC /* RedoStack.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RedoStack.m; sourceTree = "<group>"; };
+		61C38A3117EE4FA500D795DC /* WeWriteProtocal.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = WeWriteProtocal.proto; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -238,6 +243,9 @@
 				615D978817EA67BB007C3A8F /* Events.m */,
 				615D979017EBF3BE007C3A8F /* Stack.h */,
 				615D979117EBF3BE007C3A8F /* Stack.m */,
+				61C38A2D17EDEDC700D795DC /* RedoStack.h */,
+				61C38A2E17EDEDC700D795DC /* RedoStack.m */,
+				61C38A3117EE4FA500D795DC /* WeWriteProtocal.proto */,
 				61516F0817DFAABC001ED690 /* Collabrify.bundle */,
 				61516F0D17DFAB18001ED690 /* Google Protocol Buffers */,
 				61516F0917DFAABC001ED690 /* Collabrify.framework */,
@@ -446,6 +454,7 @@
 				61516F0217DFAA0A001ED690 /* Default-568h@2x.png in Resources */,
 				61516F0A17DFAABC001ED690 /* Collabrify.bundle in Resources */,
 				615D977D17E7C6F2007C3A8F /* Storyboard.storyboard in Resources */,
+				61C38A3217EE4FA500D795DC /* WeWriteProtocal.proto in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -496,6 +505,7 @@
 				615D978617E7DEAA007C3A8F /* OneEvent.m in Sources */,
 				615D978917EA67BB007C3A8F /* Events.m in Sources */,
 				615D979217EBF3BE007C3A8F /* Stack.m in Sources */,
+				61C38A2F17EDEDC700D795DC /* RedoStack.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

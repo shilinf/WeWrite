@@ -9,5 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "IMLCTextView.h"
 
-@interface ViewController : UIViewController
+@interface ViewController : UIViewController {
+    //IMLCTextView* _InputBox;
+}
 @end

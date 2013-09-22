@@ -1,0 +1,16 @@
+package WeWrite;
+
+message Event {
+    required int32 sequenceId = 1;
+    enum EventType{
+        UNKNOWN = 0;
+        INSERT = 1;
+        DELETE = 2;
+        UNDO = 3;
+        REDO = 4;
+        ACKNOWLEGEMENT = 5;
+    }
+    optional EventType eventType = 2 [default = UNKNOWN];
+    optional int32 location = 3;
+    optional string content = 4;
+}

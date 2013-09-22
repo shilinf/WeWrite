@@ -9,6 +9,7 @@
 #import "IMLCTextView.h"
 #import "Events.h"
 #import "OneEvent.h"
+#import "RedoStack.h"
 
 @implementation IMLCTextView
 
@@ -49,15 +50,28 @@
 - (BOOL)textView:(IMLCTextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     NSString* tempStr=@"";
-    tempStr=[[textView text] stringByAppendingString:text];
+    tempStr=[textView text];
     //NSLog(@"%@", tempStr);
     //NSLog(@"%d", range.location);
-    NSLog(@"%d", range.length);
-    OneEvent* event = [[OneEvent alloc]initWithOperation:range.length CursorLocation:range.location Length:1 Content:[tempStr substringWithRange:NSMakeRange([tempStr length] - 1, 1)]];
+    //NSLog(@"%d", range.length);
+    OneEvent* event;
+    if (!range.length) {
+        event = [[OneEvent alloc]initWithOperation:range.length CursorLocation:range.location Length:1 Content: text];
+    }
+    else {
+        if ([tempStr length]!=0) {
+            event = [[OneEvent alloc]initWithOperation:range.length CursorLocation:range.location Length:1 Content:[tempStr substringWithRange:NSMakeRange(range.location, 1)]];
+        }
+    }
+    //NSLog(@"%@", tempStr);
     NSLog(@"%@", event.getContent);
-
-    Events* allEvents;
+    //NSLog(@"%d", range.location);
+    //NSLog(@"%d", 10);
+    Events* allEvents = [Events sharedEvents];
     [allEvents push:event];
+    //NSLog(@"%d", [[allEvents pop] getCursorLocation]);
+    RedoStack* myRedoStack = [RedoStack sharedEvents];
+    [myRedoStack clear];
     
     if (range.length <= 1)
     {
