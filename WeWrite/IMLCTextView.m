@@ -10,8 +10,10 @@
 #import "Events.h"
 #import "OneEvent.h"
 #import "RedoStack.h"
+#include "MyBuffers.h"
 
 @implementation IMLCTextView
+@synthesize transfer = _transfer;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -27,6 +29,7 @@
     if (self = [super initWithCoder:aDecoder])
     {
         [self setDelegate:self];
+        [_transfer init];
     }
     return self;
 }
@@ -63,15 +66,19 @@
             event = [[OneEvent alloc]initWithOperation:range.length CursorLocation:range.location Length:1 Content:[tempStr substringWithRange:NSMakeRange(range.location, 1)]];
         }
     }
-    //NSLog(@"%@", tempStr);
     NSLog(@"%@", event.getContent);
     //NSLog(@"%d", range.location);
-    //NSLog(@"%d", 10);
     Events* allEvents = [Events sharedEvents];
     [allEvents push:event];
-    //NSLog(@"%d", [[allEvents pop] getCursorLocation]);
     RedoStack* myRedoStack = [RedoStack sharedEvents];
     [myRedoStack clear];
+    
+    
+    
+    
+    
+    
+    
     
     if (range.length <= 1)
     {
