@@ -22,7 +22,8 @@
 
 @property (strong, nonatomic) NSArray *tags;
 @property (strong, nonatomic) CollabrifyClient *client;
-@property (strong, nonatomic) NSData *data;
+// data for base file
+@property (strong, nonatomic) NSData * data;
 @property int64_t sessionID;
 @property (nonatomic) int64_t userId;
 
@@ -140,7 +141,7 @@ static NSMutableArray* localRegistrationID;
 }
 
 - (IBAction)CreateSession:(id)sender {
-    [[self client] createSessionWithBaseFileWithName:@"linfengSession1"
+    [[self client] createSessionWithName:@"linfengSession4"
                                                 tags:self.tags
                                             password:nil
                                          startPaused:NO
@@ -148,8 +149,8 @@ static NSMutableArray* localRegistrationID;
                                        if(!error) {
                                            //TODO: update the interface to show the user that they have created a session
                                            _sessionID = sessionID;
-                                           
-                                           
+                                           NSLog( @"%lld" , sessionID);
+                                           //NSLog(@"abcdefg");
                                            
                                        }
                                        else {
@@ -174,7 +175,7 @@ static NSMutableArray* localRegistrationID;
     
     
     
-    //joinSessionWithsessionID:111111;
+    [self joinSessionWithsessionID:2553027];
     
 }
 
@@ -188,60 +189,6 @@ static NSMutableArray* localRegistrationID;
 
 
 
-
-
-
-
-
-
-
-
-
-/*
-- (id) init
-{
-    self = [super init];
-    if(self) {
-        NSError *error;
-        [self setClient:[[CollabrifyClient alloc] initWithGmail:@"shilinfeng.man@gmail.com"
-                                                    displayName:@"Linfeng Shi"
-                                                   accountGmail:@"441fall2013@umich.edu"
-                                                    accessToken:@"XY3721425NoScOpE"
-                                                 getLatestEvent:NO
-                                                          error:&error]];
-        [self setTags:@[@"stoneTag"]];
-        [[self client] setDelegate:self];
-        [[self client] setDataSource:self];
-    }
-    return self;
-}
- */
-
-
-
-/*
-- (int64_t) createSession
-{
-    [[self client] createSessionWithBaseFileWithName:@"linfengSession1"
-                                                tags:self.tags
-                                            password:nil
-                                         startPaused:NO
-                                   completionHandler:^(int64_t sessionID, CollabrifyError *error) {
-                                       if(!error) {
-                                           //TODO: update the interface to show the user that they have created a session
-                                           
-                                       }
-                                       else {
-                                           //TODO: handle the error
-                                           
-                                           
-                                       }
-                                   }
-     ];
-    return _sessionID;
-}
-*/
-
 /**
  * Return the data offset by baseFilSize or nil if the size matches your base file's size
  *
@@ -252,21 +199,24 @@ static NSMutableArray* localRegistrationID;
  * receiving a request to continue uploading.
  * @warning Data is not requested on the main thread.
  */
+/*
 - (NSData *)client:(CollabrifyClient *)client requestsBaseFileChunkForCurrentBaseFileSize:(NSInteger)baseFileSize
 {
     if (![self data])
     {
-        NSString *string = @"THIS IS A Data EXAMPLE";
+        NSString *string = @"THIS IS LINFENG SHI";
         [self setData:[string dataUsingEncoding:NSUTF8StringEncoding]];
     }
     NSInteger length = [[self data] length] - baseFileSize;
     if (length == 0)
+    {
         return nil;
-    //TODO
-    //return [NSData dataWithBytes:([[self data] bytes] + baseFileSize) length:length];
+    }
+    
+    return [NSData dataWithBytes:((char *)[[self data] bytes] + baseFileSize) length:length];
 }
 
-
+*/
 
 
 
@@ -275,22 +225,23 @@ static NSMutableArray* localRegistrationID;
 {
     [[self client] joinSessionWithID:sessionID
                             password:nil
-                   completionHandler:^(int64_t maxOrderID, int32_t baseFileSize, CollabrifyError *error) {
+                   completionHandler:^(int64_t maxOrderID, int32_t baseFileSize, CollabrifyError *error)
+                   {
                        if (error) {
-                           NSLog(@"Error class = %@", [error class]);
-                           NSLog(@"Create Session Error = %@, %@, %@", error, [error domain], [error localizedDescription]);
+                           NSLog(@"!!!!!!Error class = %@", [error class]);
+                           NSLog(@"!!!!!!Create Session Error = %@, %@, %@", error, [error domain], [error localizedDescription]);
                        } else {
                            _sessionID = sessionID;
+                           NSLog( @"!!!");
+                           NSLog( @"%lld" , sessionID);
                            //TODO: update local file
-                           
-                           
-                           
-                           NSLog(@"Session ID = %lli", sessionID);
+                           //NSLog(@"Session ID = %lli", sessionID);
                            NSLog(@"Session is protected = %i", [[self client] currentSessionIsPasswordProtected]);
                            int submissionID = [self.client broadcast:[@"test bc" dataUsingEncoding:NSUTF8StringEncoding] eventType:nil];
                            NSLog(@"%u",submissionID);
                        }
                    }];
+    NSLog( @"???");
 }
 /**
  * Called when the a chunk of base file is received or when all of the chunks have been received.
@@ -403,8 +354,8 @@ static NSMutableArray* localRegistrationID;
             event = [[OneEvent alloc]initWithOperation:range.length CursorLocation:range.location Length:1 Content:[tempStr substringWithRange:NSMakeRange(range.location, 1)]];
         }
     }
-    NSLog(@"%@", event.getContent);
-    NSLog(@"%d", range.location);
+    //NSLog(@"%@", event.getContent);
+    //NSLog(@"%d", range.location);
 
     NSData* dataSend = [BufferParsing sendEventFormatting:event];
     int32_t registrationID =[[self client] broadcast:dataSend eventType:nil];
