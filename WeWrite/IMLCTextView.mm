@@ -10,10 +10,10 @@
 #import "Events.h"
 #import "OneEvent.h"
 #import "RedoStack.h"
-#include "MyBuffers.h"
+#import "BufferParsing.h"
 
 @implementation IMLCTextView
-@synthesize transfer = _transfer;
+//@synthesize transfer = _transfer;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -29,7 +29,7 @@
     if (self = [super initWithCoder:aDecoder])
     {
         [self setDelegate:self];
-        [_transfer init];
+        //[_transfer init];
     }
     return self;
 }
@@ -49,7 +49,7 @@
     
     return [super canPerformAction:action withSender:sender];
 }
-
+/*
 - (BOOL)textView:(IMLCTextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
     NSString* tempStr=@"";
@@ -72,8 +72,7 @@
     [allEvents push:event];
     RedoStack* myRedoStack = [RedoStack sharedEvents];
     [myRedoStack clear];
-    
-    
+    //NSData* dataSend = [BufferParsing sendEventFormatting:event];
     
     
     
@@ -86,7 +85,7 @@
     }
     
     return NO;
-}
+}*/
 
 - (void)addGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {

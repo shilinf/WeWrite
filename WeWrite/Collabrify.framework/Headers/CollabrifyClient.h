@@ -45,7 +45,7 @@ extern NSString *const CollabrifyClientNetworkStatusKey; //NSNumber representing
  * @param data The data representing the event.
  * @discussion CollabrifyClientReceivedEventNotification is posted with CollabrifyClientOrderIDKey and CollabrifyClientEventDataKey.
  *
- * If the incoming event did not originate from this client, submissionRegistrationID will be -1
+ * If the incoming event did not originate from this client, submissionRegistrationID will be -1-
  *
  * @warning This method is not called on the main thread. Any UI interaction needs to be done on the main thread
  */

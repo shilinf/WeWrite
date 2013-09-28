@@ -31,6 +31,13 @@
 - (void) modifyOperation{
     operation = ~operation;
 }
+- (int32_t) getRegistrationID{
+    return registrationID;
+}
+- (void) setRegistrationID:(int32_t)ID
+{
+    registrationID = ID;
+}
 
 
 - (int) getLength {

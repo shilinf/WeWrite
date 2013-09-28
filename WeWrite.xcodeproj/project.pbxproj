@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		6132C11617F3C06D008CA9ED /* BufferParsing.mm in Sources */ = {isa = PBXBuildFile; fileRef = 6132C11517F3C06D008CA9ED /* BufferParsing.mm */; };
+		61465F1917F6703500EA0313 /* AllEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 61465F1817F6703500EA0313 /* AllEvents.m */; };
+		61465F1C17F71F9600EA0313 /* controllertestViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 61465F1B17F71F9600EA0313 /* controllertestViewController.m */; };
 		61516EEC17DFAA0A001ED690 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61516EEB17DFAA0A001ED690 /* UIKit.framework */; };
 		61516EEE17DFAA0A001ED690 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61516EED17DFAA0A001ED690 /* Foundation.framework */; };
 		61516EF017DFAA0A001ED690 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61516EEF17DFAA0A001ED690 /* CoreGraphics.framework */; };
@@ -55,8 +57,8 @@
 		61516F8717DFB03C001ED690 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 61516F8617DFB03C001ED690 /* SystemConfiguration.framework */; };
 		61516F8917DFB049001ED690 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 61516F8817DFB049001ED690 /* libz.dylib */; };
 		615D977D17E7C6F2007C3A8F /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 615D977C17E7C6F2007C3A8F /* Storyboard.storyboard */; };
-		615D978017E7C73E007C3A8F /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 615D977F17E7C73E007C3A8F /* ViewController.m */; };
-		615D978317E7D315007C3A8F /* IMLCTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = 615D978217E7D315007C3A8F /* IMLCTextView.m */; };
+		615D978017E7C73E007C3A8F /* ViewController.mm in Sources */ = {isa = PBXBuildFile; fileRef = 615D977F17E7C73E007C3A8F /* ViewController.mm */; };
+		615D978317E7D315007C3A8F /* IMLCTextView.mm in Sources */ = {isa = PBXBuildFile; fileRef = 615D978217E7D315007C3A8F /* IMLCTextView.mm */; };
 		615D978617E7DEAA007C3A8F /* OneEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 615D978517E7DEAA007C3A8F /* OneEvent.m */; };
 		615D978917EA67BB007C3A8F /* Events.m in Sources */ = {isa = PBXBuildFile; fileRef = 615D978817EA67BB007C3A8F /* Events.m */; };
 		615D979217EBF3BE007C3A8F /* Stack.m in Sources */ = {isa = PBXBuildFile; fileRef = 615D979117EBF3BE007C3A8F /* Stack.m */; };
@@ -65,12 +67,15 @@
 		61FE71C817F0E7F3009F8A04 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 61FE71C717F0E7F3009F8A04 /* libstdc++.dylib */; };
 		61FE71CE17F0EBEF009F8A04 /* WeWriteProtocal.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 61FE71CC17F0EBEF009F8A04 /* WeWriteProtocal.pb.cc */; };
 		61FE71D117F0F078009F8A04 /* InformationTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FE71D017F0F078009F8A04 /* InformationTransfer.m */; };
-		61FE71D417F103B6009F8A04 /* MyBuffers.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FE71D317F103B6009F8A04 /* MyBuffers.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		6132C11417F3C06D008CA9ED /* BufferParsing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BufferParsing.h; sourceTree = "<group>"; };
 		6132C11517F3C06D008CA9ED /* BufferParsing.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = BufferParsing.mm; sourceTree = "<group>"; };
+		61465F1717F6703500EA0313 /* AllEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AllEvents.h; sourceTree = "<group>"; };
+		61465F1817F6703500EA0313 /* AllEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AllEvents.m; sourceTree = "<group>"; };
+		61465F1A17F71F9500EA0313 /* controllertestViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = controllertestViewController.h; sourceTree = "<group>"; };
+		61465F1B17F71F9600EA0313 /* controllertestViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = controllertestViewController.m; sourceTree = "<group>"; };
 		61516EE817DFAA0A001ED690 /* WeWrite.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WeWrite.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		61516EEB17DFAA0A001ED690 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		61516EED17DFAA0A001ED690 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -173,9 +178,9 @@
 		61516F8817DFB049001ED690 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		615D977C17E7C6F2007C3A8F /* Storyboard.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		615D977E17E7C73E007C3A8F /* ViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		615D977F17E7C73E007C3A8F /* ViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		615D977F17E7C73E007C3A8F /* ViewController.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = ViewController.mm; sourceTree = "<group>"; };
 		615D978117E7D315007C3A8F /* IMLCTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMLCTextView.h; sourceTree = "<group>"; };
-		615D978217E7D315007C3A8F /* IMLCTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMLCTextView.m; sourceTree = "<group>"; };
+		615D978217E7D315007C3A8F /* IMLCTextView.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = IMLCTextView.mm; sourceTree = "<group>"; };
 		615D978417E7DEAA007C3A8F /* OneEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OneEvent.h; sourceTree = "<group>"; };
 		615D978517E7DEAA007C3A8F /* OneEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OneEvent.m; sourceTree = "<group>"; };
 		615D978717EA67BB007C3A8F /* Events.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Events.h; sourceTree = "<group>"; };
@@ -190,8 +195,6 @@
 		61FE71CD17F0EBEF009F8A04 /* WeWriteProtocal.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeWriteProtocal.pb.h; sourceTree = "<group>"; };
 		61FE71CF17F0F078009F8A04 /* InformationTransfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationTransfer.h; sourceTree = "<group>"; };
 		61FE71D017F0F078009F8A04 /* InformationTransfer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationTransfer.m; sourceTree = "<group>"; };
-		61FE71D217F103B6009F8A04 /* MyBuffers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyBuffers.h; sourceTree = "<group>"; };
-		61FE71D317F103B6009F8A04 /* MyBuffers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyBuffers.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -245,35 +248,37 @@
 		61516EF117DFAA0A001ED690 /* WeWrite */ = {
 			isa = PBXGroup;
 			children = (
+				615D979017EBF3BE007C3A8F /* Stack.h */,
+				615D979117EBF3BE007C3A8F /* Stack.m */,
+				61516EFA17DFAA0A001ED690 /* AppDelegate.h */,
 				61FE71CC17F0EBEF009F8A04 /* WeWriteProtocal.pb.cc */,
 				61FE71CD17F0EBEF009F8A04 /* WeWriteProtocal.pb.h */,
 				61FE71CF17F0F078009F8A04 /* InformationTransfer.h */,
 				61FE71D017F0F078009F8A04 /* InformationTransfer.m */,
-				61FE71D217F103B6009F8A04 /* MyBuffers.h */,
-				61FE71D317F103B6009F8A04 /* MyBuffers.m */,
 				6132C11417F3C06D008CA9ED /* BufferParsing.h */,
 				6132C11517F3C06D008CA9ED /* BufferParsing.mm */,
-				61516EFA17DFAA0A001ED690 /* AppDelegate.h */,
 				61516EFB17DFAA0A001ED690 /* AppDelegate.m */,
 				61516F0C17DFAB01001ED690 /* config.h */,
 				615D977C17E7C6F2007C3A8F /* Storyboard.storyboard */,
 				615D977E17E7C73E007C3A8F /* ViewController.h */,
-				615D977F17E7C73E007C3A8F /* ViewController.m */,
+				615D977F17E7C73E007C3A8F /* ViewController.mm */,
 				615D978117E7D315007C3A8F /* IMLCTextView.h */,
-				615D978217E7D315007C3A8F /* IMLCTextView.m */,
+				615D978217E7D315007C3A8F /* IMLCTextView.mm */,
 				615D978417E7DEAA007C3A8F /* OneEvent.h */,
 				615D978517E7DEAA007C3A8F /* OneEvent.m */,
 				615D978717EA67BB007C3A8F /* Events.h */,
 				615D978817EA67BB007C3A8F /* Events.m */,
-				615D979017EBF3BE007C3A8F /* Stack.h */,
-				615D979117EBF3BE007C3A8F /* Stack.m */,
 				61C38A2D17EDEDC700D795DC /* RedoStack.h */,
 				61C38A2E17EDEDC700D795DC /* RedoStack.m */,
+				61465F1717F6703500EA0313 /* AllEvents.h */,
+				61465F1817F6703500EA0313 /* AllEvents.m */,
 				61C38A3117EE4FA500D795DC /* WeWriteProtocal.proto */,
 				61516F0817DFAABC001ED690 /* Collabrify.bundle */,
 				61516F0D17DFAB18001ED690 /* Google Protocol Buffers */,
 				61516F0917DFAABC001ED690 /* Collabrify.framework */,
 				61516EF217DFAA0A001ED690 /* Supporting Files */,
+				61465F1A17F71F9500EA0313 /* controllertestViewController.h */,
+				61465F1B17F71F9600EA0313 /* controllertestViewController.m */,
 			);
 			path = WeWrite;
 			sourceTree = "<group>";
@@ -524,16 +529,17 @@
 				61516F8317DFAB19001ED690 /* unknown_field_set.cc in Sources */,
 				61516F8417DFAB19001ED690 /* wire_format.cc in Sources */,
 				61516F8517DFAB19001ED690 /* wire_format_lite.cc in Sources */,
-				615D978017E7C73E007C3A8F /* ViewController.m in Sources */,
-				615D978317E7D315007C3A8F /* IMLCTextView.m in Sources */,
+				615D978017E7C73E007C3A8F /* ViewController.mm in Sources */,
+				615D978317E7D315007C3A8F /* IMLCTextView.mm in Sources */,
 				615D978617E7DEAA007C3A8F /* OneEvent.m in Sources */,
 				615D978917EA67BB007C3A8F /* Events.m in Sources */,
 				615D979217EBF3BE007C3A8F /* Stack.m in Sources */,
 				61C38A2F17EDEDC700D795DC /* RedoStack.m in Sources */,
 				61FE71CE17F0EBEF009F8A04 /* WeWriteProtocal.pb.cc in Sources */,
 				61FE71D117F0F078009F8A04 /* InformationTransfer.m in Sources */,
-				61FE71D417F103B6009F8A04 /* MyBuffers.m in Sources */,
 				6132C11617F3C06D008CA9ED /* BufferParsing.mm in Sources */,
+				61465F1917F6703500EA0313 /* AllEvents.m in Sources */,
+				61465F1C17F71F9600EA0313 /* controllertestViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -567,7 +573,9 @@
 				COPY_PHASE_STRIP = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
 				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_INPUT_FILETYPE = automatic;
 				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"DEBUG=1",
 					"$(inherited)",
@@ -576,7 +584,10 @@
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/\"/**";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/\"/**",
+					"\"$(SRCROOT)/Google Protocol Buffers/Headers\"/**",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -598,10 +609,15 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_INPUT_FILETYPE = automatic;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/\"/**";
+				HEADER_SEARCH_PATHS = (
+					"\"$(SRCROOT)/\"/**",
+					"\"$(SRCROOT)/Google Protocol Buffers/Headers\"/**",
+				);
 				IPHONEOS_DEPLOYMENT_TARGET = 6.1;
 				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
 				SDKROOT = iphoneos;

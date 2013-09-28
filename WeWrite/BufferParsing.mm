@@ -10,6 +10,42 @@
 
 @implementation BufferParsing
 
++ (NSData *) sendEventFormatting: (OneEvent*) event
+{
+    WeWrite::Event eventBuffer;
+    eventBuffer.set_location([event getCursorLocation]);
+    std::string *cursorLocation = new std::string([[event getContent] UTF8String]);
+    eventBuffer.set_content(cursorLocation->c_str());
+    WeWrite::Event_EventType eventType;
+    if ([event getOperation]) {
+        eventType = WeWrite::Event_EventType_INSERT;
+    }
+    else {
+        eventType = WeWrite::Event_EventType_DELETE;
+    }
+    eventBuffer.set_eventtype(eventType);
+    
+    //TODO: modify sequenceid
+    eventBuffer.set_sequenceid(10);
+    return dataForMessageWeWrite(eventBuffer);
+}
+
++ (OneEvent*) receiveEventFormatting: (NSData *) data
+{
+    WeWrite::Event eventBuffer;
+    parseDelimitedMessageFromDataWeWrite(eventBuffer, data);
+    OneEvent* resultEvent;
+    BOOL op;
+    if (eventBuffer.eventtype() == WeWrite::Event_EventType_INSERT) {
+        op = false;
+    }
+    else {
+        op = true;
+    }
+    resultEvent = [[OneEvent alloc] initWithOperation:op CursorLocation:eventBuffer.location() Length:1 Content:[NSString stringWithUTF8String:eventBuffer.content().c_str()]];
+    return resultEvent;
+}
+
 NSData *parseDelimitedMessageFromDataWeWrite(::google::protobuf::Message &message, NSData *data)
 {
     ::google::protobuf::io::ArrayInputStream arrayInputStream([data bytes], [data length]);

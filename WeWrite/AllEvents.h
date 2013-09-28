@@ -1,17 +1,20 @@
 //
-//  Events.h
+//  AllEvents.h
 //  WeWrite
 //
-//  Created by Linfeng Shi on 9/18/13.
+//  Created by Linfeng Shi on 9/27/13.
 //  Copyright (c) 2013 Linfeng Shi. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
-#import "Stack.h"
 
-@interface Events : NSObject 
+@interface AllEvents : NSObject
+
 + (id)sharedEvents;
 - (void)push: (id)oneObject;
+-(void) unwindPush:(id)oneObject;
 - (id) pop;
+-(id) unwindPop;
 - (BOOL) empty;
+-(BOOL)unwindEmpty;
 @end

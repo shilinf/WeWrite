@@ -10,11 +10,19 @@
 #import <google/protobuf/io/zero_copy_stream_impl_lite.h>
 #import <google/protobuf/io/coded_stream.h>
 #import "WeWriteProtocal.pb.h"
+#import "OneEvent.h"
+
 
 @interface BufferParsing : NSObject
+
+
++ (NSData *) sendEventFormatting: (OneEvent*) event;
+
++ (OneEvent*) receiveEventFormatting: (NSData *) data;
 
 NSData *parseDelimitedMessageFromDataWeWrite(::google::protobuf::Message &message, NSData *data);
 
 NSData *dataForMessageWeWrite(::google::protobuf::Message &message);
+
 
 @end

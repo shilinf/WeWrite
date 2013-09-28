@@ -14,6 +14,7 @@
     int cursorLocation;
     int length;
     NSString* content;
+    int32_t registrationID;
 }
 
 - (id) initWithOperation:(BOOL)aOperation CursorLocation:(int)aCursor Length:(int)aLength Content:(NSString*) aContent;
@@ -21,5 +22,7 @@
 - (void) modifyOperation;
 - (int) getCursorLocation;
 - (int) getLength;
+- (int32_t) getRegistrationID;
+- (void) setRegistrationID:(int32_t)ID;
 - (NSString*) getContent;
 @end

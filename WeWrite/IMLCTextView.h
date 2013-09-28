@@ -11,6 +11,6 @@
 
 @interface IMLCTextView : UITextView <UITextViewDelegate>
 
-@property(strong, nonatomic) InformationTransfer* transfer;
+//@property(strong, nonatomic) InformationTransfer* transfer;
 
 @end

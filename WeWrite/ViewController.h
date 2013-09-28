@@ -8,8 +8,12 @@
 
 #import <UIKit/UIKit.h>
 #import "IMLCTextView.h"
+#import <Collabrify/Collabrify.h>
+#import "OneEvent.h"
 
-@interface ViewController : UIViewController {
-    //IMLCTextView* _InputBox;
-}
+@interface ViewController : UIViewController <UITextViewDelegate>
+
+- (void) redoEventOp: (OneEvent*) event;
+- (void) undoEventOp: (OneEvent*) event;
+
 @end

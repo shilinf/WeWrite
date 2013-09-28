@@ -8,9 +8,7 @@
 
 #import <Foundation/Foundation.h>
 
-@interface RedoStack : NSObject {
-    NSMutableArray* s_array;
-}
+@interface RedoStack : NSObject 
 + (id)sharedEvents;
 - (void)push: (id)oneObject;
 - (id) pop;
