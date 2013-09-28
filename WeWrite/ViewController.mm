@@ -141,7 +141,7 @@ static NSMutableArray* localRegistrationID;
 }
 
 - (IBAction)CreateSession:(id)sender {
-    [[self client] createSessionWithName:@"linfengSession4"
+    [[self client] createSessionWithName:@"linfengSession8"
                                                 tags:self.tags
                                             password:nil
                                          startPaused:NO
@@ -175,7 +175,7 @@ static NSMutableArray* localRegistrationID;
     
     
     
-    [self joinSessionWithsessionID:2553027];
+    [self joinSessionWithsessionID:2562078];
     
 }
 
@@ -236,9 +236,9 @@ static NSMutableArray* localRegistrationID;
                            NSLog( @"%lld" , sessionID);
                            //TODO: update local file
                            //NSLog(@"Session ID = %lli", sessionID);
-                           NSLog(@"Session is protected = %i", [[self client] currentSessionIsPasswordProtected]);
-                           int submissionID = [self.client broadcast:[@"test bc" dataUsingEncoding:NSUTF8StringEncoding] eventType:nil];
-                           NSLog(@"%u",submissionID);
+                           //NSLog(@"Session is protected = %i", [[self client] currentSessionIsPasswordProtected]);
+                           //int submissionID = [self.client broadcast:[@"test bc" dataUsingEncoding:NSUTF8StringEncoding] eventType:nil];
+                           //NSLog(@"%u",submissionID);
                        }
                    }];
     NSLog( @"???");
@@ -285,14 +285,17 @@ static NSMutableArray* localRegistrationID;
     {
         dispatch_async(dispatch_get_main_queue(), ^{
             //TODO:
-            
+            NSLog(@"%@", data);
+            if(data != nil) {
             OneEvent* receivedEvent = [BufferParsing receiveEventFormatting:data];
+            NSLog(@"test whether receive event");
             NSUInteger index = [localRegistrationID indexOfObject:[NSNumber numberWithInt:submissionRegistrationID]];
             AllEvents* globalEvents = [AllEvents sharedEvents];
             if (index == NSNotFound) {
                 [globalEvents push:receivedEvent];
             }
             else {
+                
                 [localRegistrationID removeObjectAtIndex:index];
                 OneEvent* temp = [globalEvents pop];
                 while([temp getRegistrationID] != submissionRegistrationID) {
@@ -309,6 +312,8 @@ static NSMutableArray* localRegistrationID;
                 }
                 [globalEvents push:temp];
                 [self redoEventOp:temp];
+                
+            }
             }
         });
     }
