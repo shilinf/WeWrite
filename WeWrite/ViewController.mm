@@ -55,8 +55,7 @@ static NSMutableArray* localRegistrationID;
         // Custom initialization
         
         
-        localRegistrationID =[[NSMutableArray alloc] init];
-  
+          
         
     }
     
@@ -84,7 +83,8 @@ static NSMutableArray* localRegistrationID;
     [[self client] setDataSource:self];
 
     
-    
+    localRegistrationID =[[NSMutableArray alloc] init];
+
     
     
 }
@@ -141,7 +141,7 @@ static NSMutableArray* localRegistrationID;
 }
 
 - (IBAction)CreateSession:(id)sender {
-    [[self client] createSessionWithName:@"linfengSession8"
+    [[self client] createSessionWithName:@"linfengSession9"
                                                 tags:self.tags
                                             password:nil
                                          startPaused:NO
@@ -175,7 +175,7 @@ static NSMutableArray* localRegistrationID;
     
     
     
-    [self joinSessionWithsessionID:2562078];
+    [self joinSessionWithsessionID:2688006];
     
 }
 
@@ -255,11 +255,14 @@ static NSMutableArray* localRegistrationID;
 {
     if (data == nil) {
         //TODO: done
+        
+        
+        
     }
     else {
         //TODO: handle data here, maybe by appending it to your current data
         dispatch_async(dispatch_get_main_queue(), ^{
-        
+            
         
         
         
@@ -289,13 +292,25 @@ static NSMutableArray* localRegistrationID;
             if(data != nil) {
             OneEvent* receivedEvent = [BufferParsing receiveEventFormatting:data];
             NSLog(@"test whether receive event");
-            NSUInteger index = [localRegistrationID indexOfObject:[NSNumber numberWithInt:submissionRegistrationID]];
+            NSLog(@"%@", [receivedEvent getContent]);
+            for (int i=0;i<[localRegistrationID count];i++) {
+                NSLog(@"%@", [localRegistrationID objectAtIndex:i]);
+            }
+            NSUInteger index = NSNotFound;
+            if([localRegistrationID count] !=0) {
+                index = [localRegistrationID indexOfObject:[NSNumber numberWithInt:submissionRegistrationID]];
+            }
+            NSLog(@"%lld", orderID);
+            NSLog(@"%d", submissionRegistrationID);
+            NSLog(@"%d", index);
             AllEvents* globalEvents = [AllEvents sharedEvents];
             if (index == NSNotFound) {
+                NSLog(@"other's event");
+                [self redoEventOp:receivedEvent];
                 [globalEvents push:receivedEvent];
             }
             else {
-                
+                NSLog(@"my event");
                 [localRegistrationID removeObjectAtIndex:index];
                 OneEvent* temp = [globalEvents pop];
                 while([temp getRegistrationID] != submissionRegistrationID) {
@@ -314,6 +329,7 @@ static NSMutableArray* localRegistrationID;
                 [self redoEventOp:temp];
                 
             }
+                NSLog(@"!!!!!!!!");
             }
         });
     }
@@ -373,7 +389,9 @@ static NSMutableArray* localRegistrationID;
     AllEvents* globalEvents = [AllEvents sharedEvents];
     [globalEvents push:event];
     [localRegistrationID addObject:[NSNumber numberWithInt:registrationID]];
-    
+    NSLog(@"%d", [localRegistrationID count]);
+    NSLog(@"??????");
+
     
     if (range.length <= 1)
     {
