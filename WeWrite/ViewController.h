@@ -11,8 +11,9 @@
 #import <Collabrify/Collabrify.h>
 #import "OneEvent.h"
 
-@interface ViewController : UIViewController <UITextViewDelegate>
+@interface ViewController : UIViewController <UITextViewDelegate, UIAlertViewDelegate>
 
+@property (weak, nonatomic) NSString *sessionName;
 - (void) redoEventOp: (OneEvent*) event;
 - (void) undoEventOp: (OneEvent*) event;
 

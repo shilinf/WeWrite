@@ -16,9 +16,11 @@
 @interface ViewController () <CollabrifyClientDelegate, CollabrifyClientDataSource>
 - (IBAction)Redo:(id)sender;
 - (IBAction)Undo:(id)sender;
-- (IBAction)CreateSession:(id)sender;
 - (IBAction)JoinSession:(id)sender;
 - (IBAction)LeaveSession:(id)sender;
+- (IBAction)CreateSession:(id)sender;
+@property (weak, nonatomic) IBOutlet UIButton *CreateSession_outlet;
+
 
 @property (strong, nonatomic) NSArray *tags;
 @property (strong, nonatomic) CollabrifyClient *client;
@@ -30,8 +32,8 @@
 
 @property (retain, nonatomic) IBOutlet IMLCTextView *InputBox;
 
-
 @end
+
 
 @implementation ViewController
 
@@ -40,6 +42,8 @@
 @synthesize data = _data;
 @synthesize sessionID = _sessionID;
 @synthesize userId = _userId;
+@synthesize sessionName = _sessionName;
+
 
 
 @synthesize InputBox = _InputBox;
@@ -86,7 +90,17 @@ static NSMutableArray* localRegistrationID;
     localRegistrationID =[[NSMutableArray alloc] init];
 
     
+    UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
+                                   initWithTarget:self
+                                   action:@selector(dismissKeyboard)];
     
+    [self.view addGestureRecognizer:tap];
+    
+    
+}
+
+-(void)dismissKeyboard {
+    [_InputBox resignFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning
@@ -141,42 +155,115 @@ static NSMutableArray* localRegistrationID;
 }
 
 - (IBAction)CreateSession:(id)sender {
-    [[self client] createSessionWithName:@"linfengSession11"
-                                                tags:self.tags
-                                            password:nil
-                                         startPaused:NO
-                                   completionHandler:^(int64_t sessionID, CollabrifyError *error) {
-                                       if(!error) {
-                                           //TODO: update the interface to show the user that they have created a session
-                                           _sessionID = sessionID;
-                                           NSLog( @"%lld" , sessionID);
-                                           //NSLog(@"abcdefg");
-                                           
-                                       }
-                                       else {
-                                           //TODO: handle the error
-                                           
-                                       }
-                                   }
-     ];
+    
+    
+    
+    
+    //NSDate *date = [NSDate date];
+    //NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
+    //[outputFormatter setDateFormat:@"HH:mm:ss"];
+    //NSString *newDateString = [outputFormatter stringFromDate:date];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Session"
+                          //message:[NSString stringWithFormat:@"%lld",_sessionID]
+                                                    message:@"Please enter session name:"
+                                                   delegate:self
+                                          cancelButtonTitle:@"Conform"
+                                          otherButtonTitles:nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alert.tag = 1;
+    [alert show];
+                     
 }
+
+
+
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
+    if(alertView.tag == 1) {
+        _sessionName = [[alertView textFieldAtIndex:0] text];
+        NSLog(@"!!!Entered: %@",_sessionName);
+        [[self client] createSessionWithName:_sessionName
+                                        tags:self.tags
+                                    password:nil
+                                 startPaused:NO
+                           completionHandler:^(int64_t sessionID, CollabrifyError *error) {
+                               if(!error) {
+                                   //TODO: update the interface to show the user that they have created a session
+                                   _sessionID = sessionID;
+                                   NSLog( @"???%lld" , sessionID);
+                                   NSLog( @"???%lld" , _sessionID);
+                                   //NSLog(@"abcdefg");
+                                   
+                                   
+                               }
+                               else {
+                                   //TODO: handle the error
+                                   
+                                   UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Session"
+                                                                                   message:@"Session name already exists. Please enter new name:"
+                                                                                  delegate:self
+                                                                         cancelButtonTitle:@"Conform"
+                                                                         otherButtonTitles:nil];
+                                   alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+                                   alert.tag = 1;
+                                   [alert show];
+                                   
+                                   
+                               }
+                           }
+        ];
+    }
+    
+    
+    else if(alertView.tag == 2) {
+        [[self client] listSessionsWithTags:[self tags]
+                          completionHandler:^(NSArray *sessionList, CollabrifyError *error) {
+                              BOOL exit = false;
+                              NSString *inputName = [[alertView textFieldAtIndex:0] text];
+                              for (CollabrifySession *session in sessionList) {
+                            
+                                  if([session.sessionName isEqualToString:inputName]) {
+                                      exit = true;
+                                      [self joinSessionWithsessionID:session.sessionID];
+                                      break;
+                                  }
+                              }
+                              if (!exit) {
+                                  UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Join Session"
+                                                                                  message:@"No session with input session name exists!"
+                                                                                 delegate:self
+                                                                        cancelButtonTitle:@"Conform"
+                                                                        otherButtonTitles:nil];
+                                  [alert show];
+                              }
+                          }
+        ];
+    
+    }
+
+}
+
+
+
+
+
 
 - (IBAction)JoinSession:(id)sender {
     //NSArray* sessionList = [[NSArray alloc] init];
-    [[self client] listSessionsWithTags:[self tags]
-                      completionHandler:^(NSArray *sessionList, CollabrifyError *error) {
-                          NSLog(@"Available session: \n");
-                          for (CollabrifySession *session in sessionList) {
-                              NSLog(@"%@\n", session.sessionName);
-                          }
-                      }
-    ];
+
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Join Session"
+                                                    message:@"Please enter session name:"
+                                                   delegate:self
+                                          cancelButtonTitle:@"Conform"
+                                          otherButtonTitles:nil];
+    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+    alert.tag = 2;
+    [alert show];
     
     
-    
-    
-    [self joinSessionWithsessionID:2690014];
-    
+        
 }
 
 - (IBAction)LeaveSession:(id)sender {
@@ -184,6 +271,7 @@ static NSMutableArray* localRegistrationID;
     
     
 }
+
 
 
 
@@ -231,7 +319,7 @@ static NSMutableArray* localRegistrationID;
                            NSLog(@"!!!!!!Error class = %@", [error class]);
                            NSLog(@"!!!!!!Create Session Error = %@, %@, %@", error, [error domain], [error localizedDescription]);
                        } else {
-                           _sessionID = sessionID;
+                           //_sessionID = sessionID;
                            NSLog( @"!!!");
                            NSLog( @"%lld" , sessionID);
                            //TODO: update local file
@@ -335,12 +423,12 @@ NSLog(@"%d", [receivedEvent getOperation]);
 
 - (void) redoEventOp: (OneEvent*) event{
     if (![event getOperation]) { //insert redo
-        NSLog(@"!!!");
+        //NSLog(@"!!!");
         [_InputBox setSelectedRange:NSMakeRange([event getCursorLocation], 0)];
         [_InputBox insertText:[event getContent]];
     }
     else { //delete redo
-        NSLog(@"???");
+        //NSLog(@"???");
         [_InputBox setSelectedRange:NSMakeRange([event getCursorLocation]+1, 0)];
         [_InputBox deleteBackward];
     }
@@ -377,7 +465,7 @@ NSLog(@"%d", [receivedEvent getOperation]);
     }
     //NSLog(@"%@", event.getContent);
     //NSLog(@"%d", range.location);
-NSLog(@"%d", [event getOperation]);
+//NSLog(@"%d", [event getOperation]);
     NSData* dataSend = [BufferParsing sendEventFormatting:event];
     int32_t registrationID =[[self client] broadcast:dataSend eventType:nil];
     [event setRegistrationID:registrationID];
@@ -397,6 +485,11 @@ NSLog(@"%d", [event getOperation]);
     
     return NO;
 }
+
+
+
+
+
 
 
 

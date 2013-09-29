@@ -49,43 +49,6 @@
     
     return [super canPerformAction:action withSender:sender];
 }
-/*
-- (BOOL)textView:(IMLCTextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
-{
-    NSString* tempStr=@"";
-    tempStr=[textView text];
-    //NSLog(@"%@", tempStr);
-    //NSLog(@"%d", range.location);
-    //NSLog(@"%d", range.length);
-    OneEvent* event;
-    if (!range.length) {
-        event = [[OneEvent alloc]initWithOperation:range.length CursorLocation:range.location Length:1 Content: text];
-    }
-    else {
-        if ([tempStr length]!=0) {
-            event = [[OneEvent alloc]initWithOperation:range.length CursorLocation:range.location Length:1 Content:[tempStr substringWithRange:NSMakeRange(range.location, 1)]];
-        }
-    }
-    NSLog(@"%@", event.getContent);
-    //NSLog(@"%d", range.location);
-    Events* allEvents = [Events sharedEvents];
-    [allEvents push:event];
-    RedoStack* myRedoStack = [RedoStack sharedEvents];
-    [myRedoStack clear];
-    //NSData* dataSend = [BufferParsing sendEventFormatting:event];
-    
-    
-    
-    
-    
-    
-    if (range.length <= 1)
-    {
-        return YES;
-    }
-    
-    return NO;
-}*/
 
 - (void)addGestureRecognizer:(UIGestureRecognizer *)gestureRecognizer
 {

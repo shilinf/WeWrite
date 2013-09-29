@@ -15,7 +15,7 @@
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZWe-Pg-HQ4" customClass="IMLCTextView">
                                 <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" enablesReturnKeyAutomatically="YES"/>
                             </textView>
                             <navigationBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="TMf-k2-lpa">
                                 <items>
@@ -37,7 +37,7 @@
                                 <items>
                                     <barButtonItem title="Create Session" width="100" id="gal-NW-DPI">
                                         <connections>
-                                            <action selector="CreateSession:" destination="ihh-VJ-Ml6" id="xQS-FF-NQZ"/>
+                                            <action selector="CreateSession:" destination="ihh-VJ-Ml6" id="3Bm-qW-FMp"/>
                                         </connections>
                                     </barButtonItem>
                                     <barButtonItem title="Join Session" width="90" id="YkY-yu-5vg">
@@ -58,16 +58,17 @@
                             <constraint firstItem="ZWe-Pg-HQ4" firstAttribute="top" secondItem="TMf-k2-lpa" secondAttribute="bottom" type="default" id="0e3-yc-zsL"/>
                             <constraint firstItem="TMf-k2-lpa" firstAttribute="leading" secondItem="xvP-wZ-9kp" secondAttribute="leading" type="default" id="Iqn-aF-iEa"/>
                             <constraint firstItem="TMf-k2-lpa" firstAttribute="trailing" secondItem="xvP-wZ-9kp" secondAttribute="trailing" type="default" id="Q2L-7N-yEP"/>
+                            <constraint firstItem="cf2-s3-l6p" firstAttribute="top" secondItem="ZWe-Pg-HQ4" secondAttribute="bottom" type="default" id="XyM-9C-0j0"/>
                             <constraint firstItem="TMf-k2-lpa" firstAttribute="top" secondItem="xvP-wZ-9kp" secondAttribute="top" type="default" id="ccR-dX-NvZ"/>
                             <constraint firstItem="cf2-s3-l6p" firstAttribute="leading" secondItem="xvP-wZ-9kp" secondAttribute="leading" type="default" id="gEO-5d-PbK"/>
                             <constraint firstItem="ZWe-Pg-HQ4" firstAttribute="leading" secondItem="xvP-wZ-9kp" secondAttribute="leading" type="default" id="gos-A8-NA2"/>
                             <constraint firstItem="ZWe-Pg-HQ4" firstAttribute="trailing" secondItem="xvP-wZ-9kp" secondAttribute="trailing" type="default" id="hdM-cc-xIe"/>
                             <constraint firstItem="cf2-s3-l6p" firstAttribute="trailing" secondItem="xvP-wZ-9kp" secondAttribute="trailing" type="default" id="ifk-mr-9eB"/>
-                            <constraint firstItem="ZWe-Pg-HQ4" firstAttribute="bottom" secondItem="xvP-wZ-9kp" secondAttribute="bottom" type="default" id="mBH-GQ-qFx"/>
                             <constraint firstItem="cf2-s3-l6p" firstAttribute="bottom" secondItem="xvP-wZ-9kp" secondAttribute="bottom" type="default" id="zXj-t8-SkS"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="CreateSession_outlet" destination="gal-NW-DPI" id="7X4-5V-S6D"/>
                         <outlet property="InputBox" destination="ZWe-Pg-HQ4" id="ZfZ-dw-vik"/>
                     </connections>
                 </viewController>
@@ -85,13 +86,6 @@
         </class>
         <class className="ViewController" superclassName="UIViewController">
             <source key="sourceIdentifier" type="project" relativePath="./Classes/ViewController.h"/>
-            <relationships>
-                <relationship kind="action" name="CreateSession:"/>
-                <relationship kind="action" name="JoinSession:"/>
-                <relationship kind="action" name="LeaveSession:"/>
-                <relationship kind="action" name="Redo:"/>
-                <relationship kind="action" name="Undo:"/>
-            </relationships>
         </class>
     </classes>
     <simulatedMetricsContainer key="defaultSimulatedMetrics">

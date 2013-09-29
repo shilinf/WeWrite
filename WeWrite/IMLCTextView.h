@@ -7,7 +7,6 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "InformationTransfer.h"
 
 @interface IMLCTextView : UITextView <UITextViewDelegate>
 

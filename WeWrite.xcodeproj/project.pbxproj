@@ -66,7 +66,6 @@
 		61C38A3217EE4FA500D795DC /* WeWriteProtocal.proto in Resources */ = {isa = PBXBuildFile; fileRef = 61C38A3117EE4FA500D795DC /* WeWriteProtocal.proto */; };
 		61FE71C817F0E7F3009F8A04 /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 61FE71C717F0E7F3009F8A04 /* libstdc++.dylib */; };
 		61FE71CE17F0EBEF009F8A04 /* WeWriteProtocal.pb.cc in Sources */ = {isa = PBXBuildFile; fileRef = 61FE71CC17F0EBEF009F8A04 /* WeWriteProtocal.pb.cc */; };
-		61FE71D117F0F078009F8A04 /* InformationTransfer.m in Sources */ = {isa = PBXBuildFile; fileRef = 61FE71D017F0F078009F8A04 /* InformationTransfer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -193,8 +192,6 @@
 		61FE71C717F0E7F3009F8A04 /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		61FE71CC17F0EBEF009F8A04 /* WeWriteProtocal.pb.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = WeWriteProtocal.pb.cc; sourceTree = "<group>"; };
 		61FE71CD17F0EBEF009F8A04 /* WeWriteProtocal.pb.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WeWriteProtocal.pb.h; sourceTree = "<group>"; };
-		61FE71CF17F0F078009F8A04 /* InformationTransfer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = InformationTransfer.h; sourceTree = "<group>"; };
-		61FE71D017F0F078009F8A04 /* InformationTransfer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InformationTransfer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -251,13 +248,11 @@
 				615D979017EBF3BE007C3A8F /* Stack.h */,
 				615D979117EBF3BE007C3A8F /* Stack.m */,
 				61516EFA17DFAA0A001ED690 /* AppDelegate.h */,
+				61516EFB17DFAA0A001ED690 /* AppDelegate.m */,
 				61FE71CC17F0EBEF009F8A04 /* WeWriteProtocal.pb.cc */,
 				61FE71CD17F0EBEF009F8A04 /* WeWriteProtocal.pb.h */,
-				61FE71CF17F0F078009F8A04 /* InformationTransfer.h */,
-				61FE71D017F0F078009F8A04 /* InformationTransfer.m */,
 				6132C11417F3C06D008CA9ED /* BufferParsing.h */,
 				6132C11517F3C06D008CA9ED /* BufferParsing.mm */,
-				61516EFB17DFAA0A001ED690 /* AppDelegate.m */,
 				61516F0C17DFAB01001ED690 /* config.h */,
 				615D977C17E7C6F2007C3A8F /* Storyboard.storyboard */,
 				615D977E17E7C73E007C3A8F /* ViewController.h */,
@@ -536,7 +531,6 @@
 				615D979217EBF3BE007C3A8F /* Stack.m in Sources */,
 				61C38A2F17EDEDC700D795DC /* RedoStack.m in Sources */,
 				61FE71CE17F0EBEF009F8A04 /* WeWriteProtocal.pb.cc in Sources */,
-				61FE71D117F0F078009F8A04 /* InformationTransfer.m in Sources */,
 				6132C11617F3C06D008CA9ED /* BufferParsing.mm in Sources */,
 				61465F1917F6703500EA0313 /* AllEvents.m in Sources */,
 				61465F1C17F71F9600EA0313 /* controllertestViewController.m in Sources */,
