@@ -17,4 +17,9 @@
 -(id) unwindPop;
 - (BOOL) empty;
 -(BOOL)unwindEmpty;
+
+-(int) count;
+-(id) get:(int) index;
+
+
 @end

@@ -43,7 +43,7 @@
 @synthesize sessionID = _sessionID;
 @synthesize userId = _userId;
 @synthesize sessionName = _sessionName;
-
+@synthesize timer = _timer;
 
 
 @synthesize InputBox = _InputBox;
@@ -88,7 +88,7 @@ static NSMutableArray* localRegistrationID;
 
     
     localRegistrationID =[[NSMutableArray alloc] init];
-
+    _timer = [[NSTimer alloc] init];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
                                    initWithTarget:self
@@ -97,7 +97,46 @@ static NSMutableArray* localRegistrationID;
     [self.view addGestureRecognizer:tap];
     [tap setCancelsTouchesInView:NO];
     
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(refreshView) userInfo:nil repeats:YES];
+    
+    
 }
+
+
+- (void) refreshView
+{
+    
+    
+    AllEvents* globalEvents = [AllEvents sharedEvents];
+    NSMutableString *allText = [[NSMutableString alloc] init];
+    for (int i=0;i<[globalEvents count];i++) {
+        NSLog(@"%d", i);
+        OneEvent* currentEvent = [globalEvents get:i];
+        if (currentEvent.getOperation) { // delete
+            [allText deleteCharactersInRange:NSMakeRange(currentEvent.getCursorLocation, 1)];
+
+        }
+        else{ //insert
+            [allText insertString:currentEvent.getContent atIndex:currentEvent.getCursorLocation];
+        }
+        
+    }
+    
+    
+    //[_InputBox setEditable:NO];
+    
+    
+    
+    NSString *textReplace = [NSString stringWithString:allText];
+    [_InputBox setSelectedRange:NSMakeRange(0, _InputBox.text.length)];
+    [_InputBox setText:textReplace];
+    
+    //[_InputBox setEditable:YES];
+
+}
+
+
+
 
 -(void)dismissKeyboard {
     [_InputBox resignFirstResponder];
@@ -256,7 +295,6 @@ static NSMutableArray* localRegistrationID;
     [alert show];
     
     
-        
 }
 
 - (IBAction)LeaveSession:(id)sender {
@@ -385,6 +423,12 @@ static NSMutableArray* localRegistrationID;
                 index = [localRegistrationID indexOfObject:[NSNumber numberWithInt:submissionRegistrationID]];
             }
             AllEvents* globalEvents = [AllEvents sharedEvents];
+            [globalEvents push:receivedEvent];
+            
+                
+                
+                
+                /*
             if (index == NSNotFound) {
                 NSLog(@"other's event");
                 NSLog(@"%@", [receivedEvent getContent]);
@@ -449,7 +493,11 @@ NSLog(@"%d", [receivedEvent getOperation]);
                     
 
                 }
-            }
+            }*/
+                
+                
+                
+                
                 
             }
         });
@@ -510,7 +558,7 @@ NSLog(@"%d", [receivedEvent getOperation]);
     RedoStack* myRedoStack = [RedoStack sharedEvents];
     [myRedoStack clear];
     AllEvents* globalEvents = [AllEvents sharedEvents];
-    [globalEvents push:event];
+    //[globalEvents push:event];
     [localRegistrationID addObject:[NSNumber numberWithInt:registrationID]];
     
     if (range.length <= 1)

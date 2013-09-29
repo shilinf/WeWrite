@@ -13,6 +13,7 @@
 
 @interface ViewController : UIViewController <UITextViewDelegate, UIAlertViewDelegate>
 
+@property (strong, nonatomic) NSTimer *timer;
 @property (weak, nonatomic) NSString *sessionName;
 - (void) redoEventOp: (OneEvent*) event;
 - (void) undoEventOp: (OneEvent*) event;

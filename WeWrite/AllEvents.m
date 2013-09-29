@@ -31,6 +31,16 @@ static NSMutableArray* unwindEvents;
     return self;
 }
 
+-(id) get:(int) index
+{
+    return [allEvents objectAtIndex:index];
+}
+
+-(int) count
+{
+    return [allEvents count];
+}
+
 -(void) push:(id)oneObject
 {
     [allEvents addObject:oneObject];
