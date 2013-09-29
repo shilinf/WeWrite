@@ -161,7 +161,7 @@ static NSMutableArray* localRegistrationID;
         int32_t registrationID =[[self client] broadcast:dataSend eventType:nil];
         [redoEvent setRegistrationID:registrationID];
         AllEvents* globalEvents = [AllEvents sharedEvents];
-        [globalEvents push:redoEvent];
+        //[globalEvents push:redoEvent];
         [localRegistrationID addObject:[NSNumber numberWithInt:registrationID]];
     }
 }
@@ -174,20 +174,16 @@ static NSMutableArray* localRegistrationID;
         OneEvent* newEvent;
         [self undoEventOp:undoEvent];
         if ([undoEvent getOperation]) { // delete 1 undo
-            //[_InputBox setSelectedRange:NSMakeRange([undoEvent getCursorLocation], 0)];
-            //[_InputBox insertText:[undoEvent getContent]];
             newEvent = [[OneEvent alloc]initWithOperation:0 CursorLocation:[undoEvent getCursorLocation] Length:1 Content:[undoEvent getContent]];
         }
         else { // insert 0 undo
-            //[_InputBox setSelectedRange:NSMakeRange([undoEvent getCursorLocation]+1, 0)];
-            //[_InputBox deleteBackward];
             newEvent = [[OneEvent alloc]initWithOperation:1 CursorLocation:[undoEvent getCursorLocation]+1 Length:1 Content:[undoEvent getContent]];
         }
         NSData* dataSend = [BufferParsing sendEventFormatting:newEvent];
         int32_t registrationID =[[self client] broadcast:dataSend eventType:nil];
         [newEvent setRegistrationID:registrationID];
         AllEvents* globalEvents = [AllEvents sharedEvents];
-        [globalEvents push:newEvent];
+        //[globalEvents push:newEvent];
         [localRegistrationID addObject:[NSNumber numberWithInt:registrationID]];
         [myRedoStack push:undoEvent];
     }
