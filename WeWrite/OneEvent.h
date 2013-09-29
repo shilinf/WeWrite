@@ -19,7 +19,6 @@
 
 - (id) initWithOperation:(BOOL)aOperation CursorLocation:(int)aCursor Length:(int)aLength Content:(NSString*) aContent;
 - (BOOL) getOperation;
-- (void) modifyOperation;
 - (int) getCursorLocation;
 - (int) getLength;
 - (int32_t) getRegistrationID;

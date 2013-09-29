@@ -17,7 +17,7 @@
     std::string *cursorLocation = new std::string([[event getContent] UTF8String]);
     eventBuffer.set_content(cursorLocation->c_str());
     WeWrite::Event_EventType eventType;
-    if ([event getOperation]) {
+    if (![event getOperation]) {
         eventType = WeWrite::Event_EventType_INSERT;
     }
     else {

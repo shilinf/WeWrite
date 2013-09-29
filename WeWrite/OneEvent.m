@@ -28,9 +28,6 @@
     return operation;
 }
 
-- (void) modifyOperation{
-    operation = ~operation;
-}
 - (int32_t) getRegistrationID{
     return registrationID;
 }

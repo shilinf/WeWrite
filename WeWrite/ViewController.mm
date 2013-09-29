@@ -141,7 +141,7 @@ static NSMutableArray* localRegistrationID;
 }
 
 - (IBAction)CreateSession:(id)sender {
-    [[self client] createSessionWithName:@"linfengSession9"
+    [[self client] createSessionWithName:@"linfengSession11"
                                                 tags:self.tags
                                             password:nil
                                          startPaused:NO
@@ -175,7 +175,7 @@ static NSMutableArray* localRegistrationID;
     
     
     
-    [self joinSessionWithsessionID:2688006];
+    [self joinSessionWithsessionID:2690014];
     
 }
 
@@ -292,20 +292,17 @@ static NSMutableArray* localRegistrationID;
             if(data != nil) {
             OneEvent* receivedEvent = [BufferParsing receiveEventFormatting:data];
             NSLog(@"test whether receive event");
-            NSLog(@"%@", [receivedEvent getContent]);
-            for (int i=0;i<[localRegistrationID count];i++) {
-                NSLog(@"%@", [localRegistrationID objectAtIndex:i]);
-            }
+            //NSLog(@"%@", [receivedEvent getContent]);
             NSUInteger index = NSNotFound;
             if([localRegistrationID count] !=0) {
                 index = [localRegistrationID indexOfObject:[NSNumber numberWithInt:submissionRegistrationID]];
             }
-            NSLog(@"%lld", orderID);
-            NSLog(@"%d", submissionRegistrationID);
-            NSLog(@"%d", index);
             AllEvents* globalEvents = [AllEvents sharedEvents];
             if (index == NSNotFound) {
                 NSLog(@"other's event");
+                NSLog(@"%@", [receivedEvent getContent]);
+                NSLog(@"%d", [receivedEvent getCursorLocation]);
+NSLog(@"%d", [receivedEvent getOperation]);
                 [self redoEventOp:receivedEvent];
                 [globalEvents push:receivedEvent];
             }
@@ -317,6 +314,7 @@ static NSMutableArray* localRegistrationID;
                     [globalEvents unwindPush:temp];
                     [self undoEventOp:temp];
                     temp = [globalEvents pop];
+                    NSLog(@"seperate");
                 }
                 [self undoEventOp:temp];
                 OneEvent* temp2;
@@ -329,7 +327,7 @@ static NSMutableArray* localRegistrationID;
                 [self redoEventOp:temp];
                 
             }
-                NSLog(@"!!!!!!!!");
+                
             }
         });
     }
@@ -337,10 +335,12 @@ static NSMutableArray* localRegistrationID;
 
 - (void) redoEventOp: (OneEvent*) event{
     if (![event getOperation]) { //insert redo
+        NSLog(@"!!!");
         [_InputBox setSelectedRange:NSMakeRange([event getCursorLocation], 0)];
         [_InputBox insertText:[event getContent]];
     }
     else { //delete redo
+        NSLog(@"???");
         [_InputBox setSelectedRange:NSMakeRange([event getCursorLocation]+1, 0)];
         [_InputBox deleteBackward];
     }
@@ -377,7 +377,7 @@ static NSMutableArray* localRegistrationID;
     }
     //NSLog(@"%@", event.getContent);
     //NSLog(@"%d", range.location);
-
+NSLog(@"%d", [event getOperation]);
     NSData* dataSend = [BufferParsing sendEventFormatting:event];
     int32_t registrationID =[[self client] broadcast:dataSend eventType:nil];
     [event setRegistrationID:registrationID];
@@ -389,9 +389,6 @@ static NSMutableArray* localRegistrationID;
     AllEvents* globalEvents = [AllEvents sharedEvents];
     [globalEvents push:event];
     [localRegistrationID addObject:[NSNumber numberWithInt:registrationID]];
-    NSLog(@"%d", [localRegistrationID count]);
-    NSLog(@"??????");
-
     
     if (range.length <= 1)
     {
