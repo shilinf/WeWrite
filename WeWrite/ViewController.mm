@@ -233,7 +233,6 @@ static NSMutableArray* localRegistrationID;
                               }
                           }
         ];
-    
     }
 
 }
@@ -379,7 +378,7 @@ static NSMutableArray* localRegistrationID;
             NSLog(@"%@", data);
             if(data != nil) {
             OneEvent* receivedEvent = [BufferParsing receiveEventFormatting:data];
-            NSLog(@"test whether receive event");
+            //NSLog(@"test whether receive event");
             //NSLog(@"%@", [receivedEvent getContent]);
             NSUInteger index = NSNotFound;
             if([localRegistrationID count] !=0) {
@@ -391,6 +390,7 @@ static NSMutableArray* localRegistrationID;
                 NSLog(@"%@", [receivedEvent getContent]);
                 NSLog(@"%d", [receivedEvent getCursorLocation]);
 NSLog(@"%d", [receivedEvent getOperation]);
+                
                 [self redoEventOp:receivedEvent];
                 [globalEvents push:receivedEvent];
             }
@@ -399,25 +399,55 @@ NSLog(@"%d", [receivedEvent getOperation]);
                 [localRegistrationID removeObjectAtIndex:index];
                 OneEvent* temp = [globalEvents pop];
                 BOOL currentOne = true;
+                
+                NSString* tempStr=@"";
+
+                
+                
+                
                 while([temp getRegistrationID] != submissionRegistrationID) {
+                    NSLog(@"undo %@", temp.getContent);
+                    NSLog(@"undo %d", temp.getCursorLocation);
+
+
                     currentOne = false;
                     [globalEvents unwindPush:temp];
                     [self undoEventOp:temp];
                     temp = [globalEvents pop];
-                    NSLog(@"seperate");
+        tempStr=[_InputBox text];
+        NSLog(@"%@", tempStr);
+    
                 }
                 if (currentOne) {
                 }
                 else {
+                    NSLog(@"undo %@", temp.getContent);
+                    NSLog(@"undo %d", temp.getCursorLocation);
                     [self undoEventOp:temp];
+            tempStr=[_InputBox text];
+            NSLog(@"%@", tempStr);
                     OneEvent* temp2;
                     while (![globalEvents unwindEmpty]) {
                         temp2 = [globalEvents unwindPop];
                         [self redoEventOp:temp2];
+                        NSLog(@"redo %@", temp2.getContent);
+                        NSLog(@"redo %d", temp2.getCursorLocation);
+
+
                         [globalEvents push:temp2];
+                tempStr=[_InputBox text];
+                NSLog(@"%@", tempStr);
+
                     }
                     [globalEvents push:temp];
                     [self redoEventOp:temp];
+                    NSLog(@"redo %@", temp.getContent);
+                    NSLog(@"redo %d", temp.getCursorLocation);
+                    tempStr=[_InputBox text];
+                    NSLog(@"%@", tempStr);
+
+                    
+
                 }
             }
                 
@@ -470,7 +500,7 @@ NSLog(@"%d", [receivedEvent getOperation]);
     }
     //NSLog(@"%@", event.getContent);
     //NSLog(@"%d", range.location);
-//NSLog(@"%d", [event getOperation]);
+    //NSLog(@"%d", [event getOperation]);
     NSData* dataSend = [BufferParsing sendEventFormatting:event];
     int32_t registrationID =[[self client] broadcast:dataSend eventType:nil];
     [event setRegistrationID:registrationID];
