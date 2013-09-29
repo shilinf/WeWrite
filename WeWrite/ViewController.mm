@@ -95,7 +95,7 @@ static NSMutableArray* localRegistrationID;
                                    action:@selector(dismissKeyboard)];
     
     [self.view addGestureRecognizer:tap];
-    
+    [tap setCancelsTouchesInView:NO];
     
 }
 
@@ -159,13 +159,7 @@ static NSMutableArray* localRegistrationID;
     
     
     
-    //NSDate *date = [NSDate date];
-    //NSDateFormatter *outputFormatter = [[NSDateFormatter alloc] init];
-    //[outputFormatter setDateFormat:@"HH:mm:ss"];
-    //NSString *newDateString = [outputFormatter stringFromDate:date];
-    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Session"
-                          //message:[NSString stringWithFormat:@"%lld",_sessionID]
                                                     message:@"Please enter session name:"
                                                    delegate:self
                                           cancelButtonTitle:@"Conform"
@@ -268,6 +262,12 @@ static NSMutableArray* localRegistrationID;
 
 - (IBAction)LeaveSession:(id)sender {
     
+    [[self client] leaveAndDeleteSession:NO completionHandler:^(BOOL success, CollabrifyError *error){
+        if(!success) {
+            NSLog(@"Leave session error");
+        }
+    }];
+    
     
     
 }
@@ -317,7 +317,7 @@ static NSMutableArray* localRegistrationID;
                    {
                        if (error) {
                            NSLog(@"!!!!!!Error class = %@", [error class]);
-                           NSLog(@"!!!!!!Create Session Error = %@, %@, %@", error, [error domain], [error localizedDescription]);
+                           NSLog(@"!!!!!!Join Session Error = %@, %@, %@", error, [error domain], [error localizedDescription]);
                        } else {
                            //_sessionID = sessionID;
                            NSLog( @"!!!");
@@ -398,22 +398,27 @@ NSLog(@"%d", [receivedEvent getOperation]);
                 NSLog(@"my event");
                 [localRegistrationID removeObjectAtIndex:index];
                 OneEvent* temp = [globalEvents pop];
+                BOOL currentOne = true;
                 while([temp getRegistrationID] != submissionRegistrationID) {
+                    currentOne = false;
                     [globalEvents unwindPush:temp];
                     [self undoEventOp:temp];
                     temp = [globalEvents pop];
                     NSLog(@"seperate");
                 }
-                [self undoEventOp:temp];
-                OneEvent* temp2;
-                while (![globalEvents unwindEmpty]) {
-                    temp2 = [globalEvents unwindPop];
-                    [self redoEventOp:temp2];
-                    [globalEvents push:temp2];
+                if (currentOne) {
                 }
-                [globalEvents push:temp];
-                [self redoEventOp:temp];
-                
+                else {
+                    [self undoEventOp:temp];
+                    OneEvent* temp2;
+                    while (![globalEvents unwindEmpty]) {
+                        temp2 = [globalEvents unwindPop];
+                        [self redoEventOp:temp2];
+                        [globalEvents push:temp2];
+                    }
+                    [globalEvents push:temp];
+                    [self redoEventOp:temp];
+                }
             }
                 
             }
@@ -485,8 +490,6 @@ NSLog(@"%d", [receivedEvent getOperation]);
     
     return NO;
 }
-
-
 
 
 
