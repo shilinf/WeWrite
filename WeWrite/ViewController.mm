@@ -122,8 +122,11 @@ static NSMutableArray* unconfirmedEvents;
 {
     
     if(![_version isEqualToString:@"Individual"]) {
+        
         _cursorLocation =[_InputBox selectedRange].location;
+        
         OneEvent* temp;
+        
         /*for (int i=0; i<[newComingEvents count];i++) {
             temp = [newComingEvents objectAtIndex:i];
             if([temp getOperation] == 0 || ([temp getOperation]>=2 && [temp getHelpOperation] == 0)) {
@@ -154,7 +157,7 @@ static NSMutableArray* unconfirmedEvents;
         for(int i=0;i<uncommitCount;i++) {
             temp = [unconfirmedEvents objectAtIndex:i];
             if ([temp getOperation] == 0) {
-                NSLog(@"@%d", temp.getCursorLocation);
+                //NSLog(@"@%d", temp.getCursorLocation);
                 [textTemp insertString:temp.getContent atIndex:temp.getCursorLocation];
             }
             else if([temp getOperation] == 1){
@@ -162,7 +165,8 @@ static NSMutableArray* unconfirmedEvents;
             }
         }
         
-        if (uncommitCount != 0) {
+        if ([unconfirmedEvents count] != 0) {
+            //NSLog(@"@%d", [unconfirmedEvents count] );
             OneEvent *lastEvent =[unconfirmedEvents objectAtIndex:uncommitCount-1];
             if([lastEvent getOperation] == 0) {
                 _cursorLocation =[lastEvent getCursorLocation]+1;
@@ -548,10 +552,6 @@ static NSMutableArray* unconfirmedEvents;
                     //NSLog(@"???????%d", uncommitCount);
                     
                 for (int i=0;i<[unconfirmedEvents count];i++) {
-                    //NSLog(@"%@", [[unconfirmedEvents objectAtIndex:i] getContent]);
-                      //NSLog(@"%d", [unconfirmedEvents count]);
-                    //NSLog(@"%d", [[unconfirmedEvents objectAtIndex:i] getRegistrationID]);
-                    //NSLog(@"%d", submissionRegistrationID);
 
                     if ([[unconfirmedEvents objectAtIndex:i] getRegistrationID] == submissionRegistrationID) {
                         [unconfirmedEvents removeObjectAtIndex:i];
