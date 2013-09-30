@@ -112,7 +112,7 @@ static NSMutableArray* unconfirmedEvents;
     
 
     
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:2 target:self selector:@selector(refreshView) userInfo:nil repeats:YES];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1 target:self selector:@selector(refreshView) userInfo:nil repeats:YES];
     
     
 }
