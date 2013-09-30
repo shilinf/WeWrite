@@ -54,6 +54,8 @@
 @synthesize InputBox = _InputBox;
 
 static NSMutableArray* localRegistrationID;
+static NSMutableArray* unconfirmedEvents;
+
 
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -93,6 +95,7 @@ static NSMutableArray* localRegistrationID;
 
     
     localRegistrationID =[[NSMutableArray alloc] init];
+    unconfirmedEvents =[[NSMutableArray alloc] init];
     _timer = [[NSTimer alloc] init];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
@@ -117,7 +120,8 @@ static NSMutableArray* localRegistrationID;
     
     if(![_version isEqualToString:@"Individual"]) {
         _cursorLocation =[_InputBox selectedRange].location;
-    AllEvents* globalEvents = [AllEvents sharedEvents];
+        
+    //AllEvents* globalEvents = [AllEvents sharedEvents];
     //NSMutableString *allText;
         /*if(_context != nil) {
     
@@ -143,10 +147,31 @@ static NSMutableArray* localRegistrationID;
     
     
     //[_InputBox setEditable:NO];
+        NSString *tempString = [NSString stringWithString:_allText];
+        
+        NSMutableString *textTemp = [[NSMutableString alloc] initWithString:tempString];
+        
+
+        int uncommitCount = [unconfirmedEvents count];
+        OneEvent *temp;
+        for(int i=0;i<uncommitCount;i++) {
+            temp = [unconfirmedEvents objectAtIndex:i];
+            if ([temp getOperation] == 0) {
+                NSLog(@"@%d", temp.getCursorLocation);
+                [textTemp insertString:temp.getContent atIndex:temp.getCursorLocation];
+            }
+            else if([temp getOperation] == 1){
+                [textTemp deleteCharactersInRange:NSMakeRange(temp.getCursorLocation, 1)];
+            }
+        }
     
     
+        
+        
+        
+        
     
-        NSString *textReplace = [NSString stringWithString:_allText];
+        NSString *textReplace = [NSString stringWithString:textTemp];
         [_InputBox setSelectedRange:NSMakeRange(0, _InputBox.text.length)];
         [_InputBox setText:textReplace];
         [_InputBox setSelectedRange:NSMakeRange(_cursorLocation, 0)];
@@ -186,9 +211,9 @@ static NSMutableArray* localRegistrationID;
         NSData* dataSend = [BufferParsing sendEventFormatting:redoEvent];
         int32_t registrationID =[[self client] broadcast:dataSend eventType:nil];
         [redoEvent setRegistrationID:registrationID];
-        AllEvents* globalEvents = [AllEvents sharedEvents];
+        //AllEvents* globalEvents = [AllEvents sharedEvents];
         //[globalEvents push:redoEvent];
-        [localRegistrationID addObject:[NSNumber numberWithInt:registrationID]];
+        //[localRegistrationID addObject:[NSNumber numberWithInt:registrationID]];
         }
         else {
             
@@ -204,11 +229,6 @@ static NSMutableArray* localRegistrationID;
             NSData* dataSend = [BufferParsing sendEventFormatting:redoEvent];
             int32_t registrationID =[[self client] broadcast:dataSend eventType:nil];
             [myEvents push:redoEvent];
-            
-            
-            
-            
-            
         }
     }
     
@@ -245,7 +265,7 @@ static NSMutableArray* localRegistrationID;
             int64_t localOrderID = [[myEvents getIndex:[myEvents count]-1] getOrderID];
             if (localOrderID== -1) {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Undo"
-                                                                message:@"Please undo after server confirm your last event!"
+                                                                message:@"Please wait for the server to confirm your last event!"
                                                                delegate:self
                                                       cancelButtonTitle:@"Confirm"
                                                       otherButtonTitles:nil];
@@ -283,6 +303,16 @@ static NSMutableArray* localRegistrationID;
 - (IBAction)CreateSession:(id)sender {
     
     
+    if ([_InputBox hasText]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Session"
+                                                        message:@"Please create session with empty textbox"
+                                                       delegate:self
+                                              cancelButtonTitle:@"Confirm"
+                                              otherButtonTitles:nil];
+        [alert show];
+
+    }
+    else {
     
     
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Session"
@@ -293,7 +323,7 @@ static NSMutableArray* localRegistrationID;
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     alert.tag = 1;
     [alert show];
-                     
+    }
 }
 
 
@@ -369,7 +399,20 @@ static NSMutableArray* localRegistrationID;
 
 
 
-- (IBAction)JoinSession:(id)sender {    
+- (IBAction)JoinSession:(id)sender {
+    
+    
+    if ([_InputBox hasText]) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Join Session"
+                                                        message:@"Please join session with empty textbox"
+                                                       delegate:self
+                                              cancelButtonTitle:@"Confirm"
+                                              otherButtonTitles:nil];
+        [alert show];
+        
+    }
+    else {
+    
     UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Join Session"
                                                     message:@"Please enter session name:"
                                                    delegate:self
@@ -378,7 +421,7 @@ static NSMutableArray* localRegistrationID;
     alert.alertViewStyle = UIAlertViewStylePlainTextInput;
     alert.tag = 2;
     [alert show];
-    
+    }
     
 }
 
@@ -426,7 +469,7 @@ static NSMutableArray* localRegistrationID;
 
 
 
-//Copy from Xu
+
 - (void) joinSessionWithsessionID: (int64_t)sessionID
 {
     [[self client] joinSessionWithID:sessionID
@@ -434,17 +477,8 @@ static NSMutableArray* localRegistrationID;
                    completionHandler:^(int64_t maxOrderID, int32_t baseFileSize, CollabrifyError *error)
                    {
                        if (error) {
-                           NSLog(@"!!!!!!Error class = %@", [error class]);
-                           NSLog(@"!!!!!!Join Session Error = %@, %@, %@", error, [error domain], [error localizedDescription]);
+                           NSLog(@"Join Session Error = %@, %@, %@", error, [error domain], [error localizedDescription]);
                        } else {
-                           //_sessionID = sessionID;
-                           NSLog( @"!!!");
-                           NSLog( @"%lld" , sessionID);
-                           //TODO: update local file
-                           //NSLog(@"Session ID = %lli", sessionID);
-                           //NSLog(@"Session is protected = %i", [[self client] currentSessionIsPasswordProtected]);
-                           //int submissionID = [self.client broadcast:[@"test bc" dataUsingEncoding:NSUTF8StringEncoding] eventType:nil];
-                           //NSLog(@"%u",submissionID);
                        }
                    }];
 }
@@ -472,10 +506,6 @@ static NSMutableArray* localRegistrationID;
 
 
 
-
-
-
-
 - (void) client:(CollabrifyClient *)client receivedEventWithOrderID:(int64_t)orderID submissionRegistrationID:(int32_t)submissionRegistrationID eventType:(NSString *)eventType data:(NSData *)data
 {
     NSLog(@"%@", data);
@@ -499,7 +529,22 @@ static NSMutableArray* localRegistrationID;
                 
             if([localRegistrationID count] !=0) {
                 index = [localRegistrationID indexOfObject:[NSNumber numberWithInt:submissionRegistrationID]];
+                [localRegistrationID removeObjectAtIndex:index];
             }
+                
+                if([receivedEvent getOperation]==0 || [receivedEvent getOperation] == 1){
+                    //if([unconfirmedEvents ])
+                //int uncommitCount = ;
+                    //NSLog(@"???????%d", uncommitCount);
+                    
+                for (int i=0;i<[unconfirmedEvents count];i++) {
+                    //NSLog(@"%@", [[unconfirmedEvents objectAtIndex:i] getContent]);
+                    if ([[unconfirmedEvents objectAtIndex:i] getRegistrationID] == submissionRegistrationID) {
+                        [unconfirmedEvents removeObjectAtIndex:i];
+                    }
+                }
+                }
+                
                 [receivedEvent setRegistrationID:submissionRegistrationID];
                             AllEvents* globalEvents = [AllEvents sharedEvents];
                             Events *localEvents = [Events sharedEvents];
@@ -660,7 +705,7 @@ static NSMutableArray* localRegistrationID;
                 
                 
                 
-                /*
+                /* unwind/wind solution
             if (index == NSNotFound) {
                 NSLog(@"other's event");
                 NSLog(@"%@", [receivedEvent getContent]);
@@ -757,10 +802,39 @@ NSLog(@"%d", [receivedEvent getOperation]);
     }
 }
 
+- (void) client:(CollabrifyClient *)client encounteredError:(CollabrifyError *)error
+{
+    if ([error isMemberOfClass:[CollabrifyUnrecoverableError class]]) {
+        NSLog(@"The client cannot recover from this error");
+        //update the interface to its default state
+    }
+switch ([error classType]) {
+    case CollabrifyClassTypeAddEvent:
+    {
+        int32_t submissionRegistrationID;
+        NSData *eventData;
+        
+        submissionRegistrationID = [[[error userInfo] valueForKey:CollabrifySubmissionRegistrationIDKey]intValue];
+        eventData = [[error userInfo] valueForKey:CollabrifyDataKey];
+        break;
+    }
+    default:
+        break;
+}
+
+
+}
+
+
 
 
 - (BOOL)textView:(IMLCTextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
+
+    
+    
+    
+    
     NSString* tempStr=@"";
     tempStr=[textView text];
     //NSLog(@"%@", tempStr);
@@ -792,8 +866,9 @@ NSLog(@"%d", [receivedEvent getOperation]);
     RedoStack* myRedoStack = [RedoStack sharedEvents];
     [myRedoStack clear];
     
+    [unconfirmedEvents addObject:event];
     
-    AllEvents* globalEvents = [AllEvents sharedEvents];
+    //AllEvents* globalEvents = [AllEvents sharedEvents];
 
     
     //[globalEvents push:event];
@@ -808,12 +883,6 @@ NSLog(@"%d", [receivedEvent getOperation]);
     
     return NO;
 }
-
-
-
-
-
-
 
 
 
