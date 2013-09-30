@@ -521,16 +521,16 @@ static NSMutableArray* unconfirmedEvents;
             OneEvent* receivedEvent = [BufferParsing receiveEventFormatting:data];
             //NSLog(@"test whether receive event");
             //NSLog(@"%@", [receivedEvent getContent]);
-            NSUInteger index = NSNotFound;
+            //NSUInteger index = NSNotFound;
                 
                 NSLog(@"???????%lld", [receivedEvent getOrderID]);
 
                 
                 
-            if([localRegistrationID count] !=0) {
+            /*if([localRegistrationID count] !=0) {
                 index = [localRegistrationID indexOfObject:[NSNumber numberWithInt:submissionRegistrationID]];
                 [localRegistrationID removeObjectAtIndex:index];
-            }
+            }*/
                 
                 if(([receivedEvent getOperation]==0 || [receivedEvent getOperation] == 1 )&& submissionRegistrationID != -1){
                     //if([unconfirmedEvents ])
@@ -538,6 +538,10 @@ static NSMutableArray* unconfirmedEvents;
                     
                 for (int i=0;i<[unconfirmedEvents count];i++) {
                     NSLog(@"%@", [[unconfirmedEvents objectAtIndex:i] getContent]);
+                      NSLog(@"%d", [unconfirmedEvents count]);
+                    NSLog(@"%d", [[unconfirmedEvents objectAtIndex:i] getRegistrationID]);
+                    NSLog(@"%d", submissionRegistrationID);
+
                     if ([[unconfirmedEvents objectAtIndex:i] getRegistrationID] == submissionRegistrationID) {
                         [unconfirmedEvents removeObjectAtIndex:i];
                         break;
@@ -867,6 +871,7 @@ switch ([error classType]) {
     RedoStack* myRedoStack = [RedoStack sharedEvents];
     [myRedoStack clear];
     
+    NSLog(@"lalalala%d", [event getRegistrationID]);
     [unconfirmedEvents addObject:event];
     
     //AllEvents* globalEvents = [AllEvents sharedEvents];
