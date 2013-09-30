@@ -55,7 +55,7 @@
 
 static NSMutableArray* localRegistrationID;
 static NSMutableArray* unconfirmedEvents;
-static NSMutableArray* newComingEvents;
+//static NSMutableArray* newComingEvents;
 
 
 
@@ -98,7 +98,7 @@ static NSMutableArray* newComingEvents;
     
     localRegistrationID =[[NSMutableArray alloc] init];
     unconfirmedEvents =[[NSMutableArray alloc] init];
-    newComingEvents =[[NSMutableArray alloc] init];
+    //newComingEvents =[[NSMutableArray alloc] init];
     _timer = [[NSTimer alloc] init];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
@@ -124,7 +124,7 @@ static NSMutableArray* newComingEvents;
     if(![_version isEqualToString:@"Individual"]) {
         _cursorLocation =[_InputBox selectedRange].location;
         OneEvent* temp;
-        for (int i=0; i<[newComingEvents count];i++) {
+        /*for (int i=0; i<[newComingEvents count];i++) {
             temp = [newComingEvents objectAtIndex:i];
             if([temp getOperation] == 0 || ([temp getOperation]>=2 && [temp getHelpOperation] == 0)) {
                 
@@ -139,7 +139,7 @@ static NSMutableArray* newComingEvents;
                     _cursorLocation--;
                 }
             }
-        }
+        }*/
         
         
 
@@ -161,15 +161,15 @@ static NSMutableArray* newComingEvents;
                 [textTemp deleteCharactersInRange:NSMakeRange(temp.getCursorLocation, 1)];
             }
         }
+        
         if (uncommitCount != 0) {
             OneEvent *lastEvent =[unconfirmedEvents objectAtIndex:uncommitCount-1];
             if([lastEvent getOperation] == 0) {
                 _cursorLocation =[lastEvent getCursorLocation]+1;
             }
-            else {
+            else if([lastEvent getOperation] == 1){
                 _cursorLocation =[lastEvent getCursorLocation];
             }
-                                   
         }
         
     
@@ -182,7 +182,7 @@ static NSMutableArray* newComingEvents;
         [_InputBox setSelectedRange:NSMakeRange(0, _InputBox.text.length)];
         [_InputBox setText:textReplace];
         [_InputBox setSelectedRange:NSMakeRange(_cursorLocation, 0)];
-        [newComingEvents removeAllObjects];
+       // [newComingEvents removeAllObjects];
 
     }
     
@@ -711,7 +711,7 @@ static NSMutableArray* newComingEvents;
                 
                 
                 
-                [newComingEvents addObject:receivedEvent];
+               // [newComingEvents addObject:receivedEvent];
 
                 
             
