@@ -534,10 +534,9 @@ static NSMutableArray* unconfirmedEvents;
                 
                 if(([receivedEvent getOperation]==0 || [receivedEvent getOperation] == 1 )&& submissionRegistrationID != -1){
                     //if([unconfirmedEvents ])
-                int uncommitCount = [unconfirmedEvents count];
                     //NSLog(@"???????%d", uncommitCount);
                     
-                for (int i=0;i<uncommitCount;i++) {
+                for (int i=0;i<[unconfirmedEvents count];i++) {
                     NSLog(@"%@", [[unconfirmedEvents objectAtIndex:i] getContent]);
                     if ([[unconfirmedEvents objectAtIndex:i] getRegistrationID] == submissionRegistrationID) {
                         [unconfirmedEvents removeObjectAtIndex:i];
