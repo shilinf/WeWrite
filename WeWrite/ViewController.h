@@ -15,8 +15,6 @@
 
 @property (strong, nonatomic) NSString *version;
 @property NSUInteger cursorLocation;
-//@property NSUInteger count;
-//@property (strong, nonatomic) NSString *context;
 @property (strong, nonatomic) NSTimer *timer;
 @property (strong, nonatomic) NSString *sessionName;
 @property (strong, nonatomic) NSMutableString *allText;

@@ -33,20 +33,16 @@ static NSMutableArray* redoEvents;
 -(void) push:(id)oneObject
 {
     [redoEvents addObject:oneObject];
-    //NSLog(@"%d", [redoEvents count]);
-    //NSLog(@"%@", oneObject);
 }
 
 -(id) pop
 {
     id item = nil;
-    //NSLog(@"%d", [redoEvents count]);
     
     if ([redoEvents count] != 0) {
         item = [redoEvents lastObject];
         [redoEvents removeLastObject];
     }
-    //NSLog(@"%d", [redoEvents count]);
     return item;
 }
 -(BOOL)empty

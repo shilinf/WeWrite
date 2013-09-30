@@ -47,16 +47,10 @@
 @synthesize version = _version;
 @synthesize allText = _allText;
 @synthesize cursorLocation = _cursorLocation;
-//@synthesize count = _count;
-//@synthesize context = _context;
-
-
 @synthesize InputBox = _InputBox;
 
 static NSMutableArray* localRegistrationID;
 static NSMutableArray* unconfirmedEvents;
-//static NSMutableArray* newComingEvents;
-
 
 
 
@@ -66,10 +60,7 @@ static NSMutableArray* unconfirmedEvents;
     if (self) {
         
         // Custom initialization
-        
-        
           
-        
     }
     
     return self;
@@ -98,7 +89,6 @@ static NSMutableArray* unconfirmedEvents;
     
     localRegistrationID =[[NSMutableArray alloc] init];
     unconfirmedEvents =[[NSMutableArray alloc] init];
-    //newComingEvents =[[NSMutableArray alloc] init];
     _timer = [[NSTimer alloc] init];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
@@ -126,38 +116,15 @@ static NSMutableArray* unconfirmedEvents;
         _cursorLocation =[_InputBox selectedRange].location;
         
         OneEvent* temp;
-        
-        /*for (int i=0; i<[newComingEvents count];i++) {
-            temp = [newComingEvents objectAtIndex:i];
-            if([temp getOperation] == 0 || ([temp getOperation]>=2 && [temp getHelpOperation] == 0)) {
-                
-                if([temp getCursorLocation] <= _cursorLocation) {
-                    NSLog(@"YES");
-                    _cursorLocation++;
-                }
-            }
-            else {
-                if([temp getCursorLocation] < _cursorLocation) {
-                    NSLog(@"NO");
-                    _cursorLocation--;
-                }
-            }
-        }*/
-        
-        
-
-        
         NSString *tempString = [NSString stringWithString:_allText];
         
         NSMutableString *textTemp = [[NSMutableString alloc] initWithString:tempString];
         
 
         int uncommitCount = [unconfirmedEvents count];
-        //OneEvent *temp;
         for(int i=0;i<uncommitCount;i++) {
             temp = [unconfirmedEvents objectAtIndex:i];
             if ([temp getOperation] == 0) {
-                //NSLog(@"@%d", temp.getCursorLocation);
                 [textTemp insertString:temp.getContent atIndex:temp.getCursorLocation];
             }
             else if([temp getOperation] == 1){
@@ -166,7 +133,6 @@ static NSMutableArray* unconfirmedEvents;
         }
         
         if ([unconfirmedEvents count] != 0) {
-            //NSLog(@"@%d", [unconfirmedEvents count] );
             OneEvent *lastEvent =[unconfirmedEvents objectAtIndex:uncommitCount-1];
             if([lastEvent getOperation] == 0) {
                 _cursorLocation =[lastEvent getCursorLocation]+1;
@@ -176,23 +142,11 @@ static NSMutableArray* unconfirmedEvents;
             }
         }
         
-    
-        
-        
-        
-        
-    
         NSString *textReplace = [NSString stringWithString:textTemp];
         [_InputBox setSelectedRange:NSMakeRange(0, _InputBox.text.length)];
         [_InputBox setText:textReplace];
         [_InputBox setSelectedRange:NSMakeRange(_cursorLocation, 0)];
-       // [newComingEvents removeAllObjects];
-
     }
-    
-    
-        //[_InputBox setEditable:YES];
-
 }
 
 
@@ -212,25 +166,17 @@ static NSMutableArray* unconfirmedEvents;
     RedoStack* myRedoStack = [RedoStack sharedEvents];
     OneEvent* redoEvent;
     Events* myEvents = [Events sharedEvents];
-
+    
     if(![myRedoStack empty]) {
-        
         if([_version isEqualToString:@"Individual"]) {
-
-        redoEvent = [myRedoStack pop];
-                [myEvents push:redoEvent];
-        [self redoEventOp:redoEvent];
-        
-        
-        NSData* dataSend = [BufferParsing sendEventFormatting:redoEvent];
-        int32_t registrationID =[[self client] broadcast:dataSend eventType:nil];
-        [redoEvent setRegistrationID:registrationID];
-        //AllEvents* globalEvents = [AllEvents sharedEvents];
-        //[globalEvents push:redoEvent];
-        //[localRegistrationID addObject:[NSNumber numberWithInt:registrationID]];
+            redoEvent = [myRedoStack pop];
+            [myEvents push:redoEvent];
+            [self redoEventOp:redoEvent];
+            NSData* dataSend = [BufferParsing sendEventFormatting:redoEvent];
+            int32_t registrationID =[[self client] broadcast:dataSend eventType:nil];
+            [redoEvent setRegistrationID:registrationID];
         }
         else {
-            
             // Send the redo operation to server
             redoEvent = [myRedoStack pop];
             if([redoEvent getOperation] == 0) {
@@ -241,41 +187,30 @@ static NSMutableArray* unconfirmedEvents;
             }
             [redoEvent setOperation:3];
             NSData* dataSend = [BufferParsing sendEventFormatting:redoEvent];
-            int32_t registrationID =[[self client] broadcast:dataSend eventType:nil];
+            [[self client] broadcast:dataSend eventType:nil];
             [myEvents push:redoEvent];
         }
     }
-    
-    
 }
-
 - (IBAction)Undo:(id)sender {
     Events* myEvents = [Events sharedEvents];
     OneEvent* undoEvent;
     RedoStack* myRedoStack = [RedoStack sharedEvents];
     OneEvent* newEvent;
     if(![myEvents empty]) {
-        
         if([_version isEqualToString:@"Individual"]) {
-        
+            
             undoEvent = [myEvents pop];
-        [self undoEventOp:undoEvent];
-        if ([undoEvent getOperation]) { // delete 1 undo
-            newEvent = [[OneEvent alloc]initWithOperation:0 CursorLocation:[undoEvent getCursorLocation] Length:1 Content:[undoEvent getContent]];
-        }
-        else { // insert 0 undo
-            newEvent = [[OneEvent alloc]initWithOperation:1 CursorLocation:[undoEvent getCursorLocation]+1 Length:1 Content:[undoEvent getContent]];
-        }
-        //NSData* dataSend = [BufferParsing sendEventFormatting:newEvent];
-        //int32_t registrationID =[[self client] broadcast:dataSend eventType:nil];
-        //[newEvent setRegistrationID:registrationID];
-        //AllEvents* globalEvents = [AllEvents sharedEvents];
-        //[globalEvents push:newEvent];
-        //[localRegistrationID addObject:[NSNumber numberWithInt:registrationID]];
-        [myRedoStack push:undoEvent];
+            [self undoEventOp:undoEvent];
+            if ([undoEvent getOperation]) { // delete 1 undo
+                newEvent = [[OneEvent alloc]initWithOperation:0 CursorLocation:[undoEvent getCursorLocation] Length:1 Content:[undoEvent getContent]];
+            }
+            else { // insert 0 undo
+                newEvent = [[OneEvent alloc]initWithOperation:1 CursorLocation:[undoEvent getCursorLocation]+1 Length:1 Content:[undoEvent getContent]];
+            }
+            [myRedoStack push:undoEvent];
         }
         else {
-            //OneEvent* newEvent;
             int64_t localOrderID = [[myEvents getIndex:[myEvents count]-1] getOrderID];
             if (localOrderID== -1) {
                 UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Undo"
@@ -285,9 +220,7 @@ static NSMutableArray* unconfirmedEvents;
                                                       otherButtonTitles:nil];
                 [alert show];
             }
-            
-        undoEvent = [myEvents pop];
-            NSLog(@"HIJOIJOIJOIJOIJOIJOIJOIJOI %lld", localOrderID);
+            undoEvent = [myEvents pop];
             [undoEvent setOrderID:localOrderID];
             if([undoEvent getOperation] == 0) {
                 [undoEvent setHelpOperation:0];
@@ -296,14 +229,9 @@ static NSMutableArray* unconfirmedEvents;
                 [undoEvent setHelpOperation:1];
             }
             [undoEvent setOperation:2];
-
-        NSData* dataSend = [BufferParsing sendEventFormatting:undoEvent];
-        int32_t registrationID =[[self client] broadcast:dataSend eventType:nil];
-        [myRedoStack push:undoEvent];
-        
-        
-        
-        
+            NSData* dataSend = [BufferParsing sendEventFormatting:undoEvent];
+            [[self client] broadcast:dataSend eventType:nil];
+            [myRedoStack push:undoEvent];
         }
     }
 }
@@ -329,14 +257,14 @@ static NSMutableArray* unconfirmedEvents;
     else {
     
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Session"
-                                                    message:@"Please enter session name:"
-                                                   delegate:self
-                                          cancelButtonTitle:@"Confirm"
-                                          otherButtonTitles:nil];
-    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
-    alert.tag = 1;
-    [alert show];
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Session"
+                                                        message:@"Please enter session name:"
+                                                       delegate:self
+                                              cancelButtonTitle:@"Confirm"
+                                              otherButtonTitles:nil];
+        alert.alertViewStyle = UIAlertViewStylePlainTextInput;
+        alert.tag = 1;
+        [alert show];
     }
 }
 
@@ -346,26 +274,16 @@ static NSMutableArray* unconfirmedEvents;
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex{
     if(alertView.tag == 1) {
         _sessionName = [[alertView textFieldAtIndex:0] text];
-        NSLog(@"!!!Entered: %@",_sessionName);
         [[self client] createSessionWithName:_sessionName
                                         tags:self.tags
                                     password:nil
                                  startPaused:NO
                            completionHandler:^(int64_t sessionID, CollabrifyError *error) {
                                if(!error) {
-                                   //TODO: update the interface to show the user that they have created a session
                                    _sessionID = sessionID;
                                    _version = @"Collabrify";
-                                   //_context = [_InputBox text];
-                                   //if (_context != nil) {
-                                   //[self client:[self client] uploadedBaseFileWithSize:[_context length]];
-                                   //}
-                                   //else {
-                                   //[self client:[self client] uploadedBaseFileWithSize: 0];
-                                   //}
                                }
                                else {
-                                   //TODO: handle the error
                                    
                                    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Create Session"
                                                                                    message:@"Session name already exists. Please enter new name:"
@@ -375,8 +293,6 @@ static NSMutableArray* unconfirmedEvents;
                                    alert.alertViewStyle = UIAlertViewStylePlainTextInput;
                                    alert.tag = 1;
                                    [alert show];
-                                   
-                                   
                                }
                            }
         ];
@@ -508,7 +424,6 @@ static NSMutableArray* unconfirmedEvents;
 - (void) client:(CollabrifyClient *)client receivedBaseFileChunk:(NSData *)data
 {
     if (data == nil) {
-        //TODO: done
     }
     else {
         //TODO: handle data here, maybe by appending it to your current data
@@ -522,48 +437,25 @@ static NSMutableArray* unconfirmedEvents;
 
 - (void) client:(CollabrifyClient *)client receivedEventWithOrderID:(int64_t)orderID submissionRegistrationID:(int32_t)submissionRegistrationID eventType:(NSString *)eventType data:(NSData *)data
 {
-    NSLog(@"%@", data);
-    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF16StringEncoding];
-   // NSLog(@"!!!%@", string);
-    
+    NSString *string = [[NSString alloc] initWithData:data encoding:NSUTF16StringEncoding];    
     if (string)
     {
         dispatch_async(dispatch_get_main_queue(), ^{
-            //TODO:
-            NSLog(@"%@", data);
             if(data != nil) {
-            OneEvent* receivedEvent = [BufferParsing receiveEventFormatting:data];
-            //NSLog(@"test whether receive event");
-            //NSLog(@"%@", [receivedEvent getContent]);
-            //NSUInteger index = NSNotFound;
+                OneEvent* receivedEvent = [BufferParsing receiveEventFormatting:data];
                 
-                NSLog(@"???????%lld", [receivedEvent getOrderID]);
-
-                
-                
-                
-            /*if([localRegistrationID count] !=0) {
-                index = [localRegistrationID indexOfObject:[NSNumber numberWithInt:submissionRegistrationID]];
-                [localRegistrationID removeObjectAtIndex:index];
-            }*/
-                
-                if(([receivedEvent getOperation]==0 || [receivedEvent getOperation] == 1 )&& submissionRegistrationID != -1){
-                    //if([unconfirmedEvents ])
-                    //NSLog(@"???????%d", uncommitCount);
-                    
-                for (int i=0;i<[unconfirmedEvents count];i++) {
-
-                    if ([[unconfirmedEvents objectAtIndex:i] getRegistrationID] == submissionRegistrationID) {
-                        [unconfirmedEvents removeObjectAtIndex:i];
-                        break;
+                if(([receivedEvent getOperation]==0 || [receivedEvent getOperation] == 1 )&& submissionRegistrationID != -1){                    
+                    for (int i=0;i<[unconfirmedEvents count];i++) {
+                        if ([[unconfirmedEvents objectAtIndex:i] getRegistrationID] == submissionRegistrationID) {
+                            [unconfirmedEvents removeObjectAtIndex:i];
+                            break;
+                        }
                     }
                 }
-                }
-                
-                
+            
                 [receivedEvent setRegistrationID:submissionRegistrationID];
-                            AllEvents* globalEvents = [AllEvents sharedEvents];
-                            Events *localEvents = [Events sharedEvents];
+                AllEvents* globalEvents = [AllEvents sharedEvents];
+                Events *localEvents = [Events sharedEvents];
                 OneEvent* temp;
                 
                 // updateorderID for confirmed events
@@ -574,12 +466,6 @@ static NSMutableArray* unconfirmedEvents;
                         [localEvents setIndex:temp at:i];
                     }
                 }
-                
-        
-                
-                NSLog(@"%lld",orderID);
-                
-                
                 if (receivedEvent.getOperation == 1) { // delete
                     [receivedEvent setOrderID:orderID];
                     [_allText deleteCharactersInRange:NSMakeRange(receivedEvent.getCursorLocation, 1)];
@@ -590,9 +476,6 @@ static NSMutableArray* unconfirmedEvents;
                     [_allText insertString:receivedEvent.getContent atIndex:receivedEvent.getCursorLocation];
                     [globalEvents push:receivedEvent];
                 }
-                
-                
-                
                 else if (receivedEvent.getOperation == 2) { // Undo
                     NSMutableArray* tempStack = [[NSMutableArray alloc] init];
                     int moved = 0;
@@ -613,16 +496,11 @@ static NSMutableArray* unconfirmedEvents;
                                if([temp1 getOperation] == 0 || ([temp1 getOperation]>=2 && [temp1 getHelpOperation] == 0)) {
                                    
                                    if([temp1 getCursorLocation] <= [temp getCursorLocation]) {
-                                       NSLog(@"YES %d", [temp1 getCursorLocation]);
-                                       NSLog(@"YES %d", [temp getCursorLocation]);
-
-                                       NSLog(@"YES");
                                        [temp setCursorLocation:([temp getCursorLocation]+1)];
                                    }
                                }
                                else {
                                    if([temp1 getCursorLocation] < [temp getCursorLocation]) {
-                                       NSLog(@"NO");
                                        [temp setCursorLocation:([temp getCursorLocation]-1)];
                                    }
                                }
@@ -648,7 +526,6 @@ static NSMutableArray* unconfirmedEvents;
                 
                 
                 else if(receivedEvent.getOperation == 3) {
-                    
                     NSMutableArray* tempStack = [[NSMutableArray alloc] init];
                     int moved = 0;
                     int countHere = [globalEvents count]-1;
@@ -661,25 +538,17 @@ static NSMutableArray* unconfirmedEvents;
                         countHere--;
                         temp = [globalEvents get:countHere];
                     }
-                    //[tempStack addObject:temp];
                     OneEvent* temp1;
                     int cursorInit = [temp getCursorLocation];
-                    NSLog(@"cccccccccc%d", moved);
                     for(int x=moved-1;x>=0;x--) {
                         temp1 = [tempStack objectAtIndex:x];
                         if([temp1 getOperation] == 0 || ([temp1 getOperation]>=2 && [temp1 getHelpOperation] == 0)) {
-                            NSLog(@"YES %d", [temp1 getCursorLocation]);
-                            NSLog(@"YES %d", [temp getCursorLocation]);
-                            
                             if([temp1 getCursorLocation] <= [temp getCursorLocation]) {
-                                NSLog(@"YES");
                                 [temp setCursorLocation:([temp getCursorLocation]+1)];
                             }
                         }
                         else {
                             if([temp1 getCursorLocation] < [temp getCursorLocation]) {
-                                NSLog(@"NO");
-
                                 [temp setCursorLocation:([temp getCursorLocation]-1)];
                             }
                         }
@@ -690,11 +559,7 @@ static NSMutableArray* unconfirmedEvents;
                     [receivedEvent setCursorLocation:[temp getCursorLocation]];
                     [receivedEvent setContent:[temp getContent]];
                     [temp setCursorLocation:cursorInit];
-
-                    //if([temp getOperation] == 0 || ([temp getOperation]>=2 && [temp getHelpOperation] == 0)) { // insert
-                        
                     if([temp getOperation] == 0){
-                        NSLog(@"HERE DO THE REDO InSERT");
                         [receivedEvent setHelpOperation:0];
                         [_allText insertString:receivedEvent.getContent atIndex:receivedEvent.getCursorLocation];
                         
@@ -707,102 +572,55 @@ static NSMutableArray* unconfirmedEvents;
                     }
                     
                     [globalEvents push:receivedEvent];
-                }
-                
-                
-                
-               // [newComingEvents addObject:receivedEvent];
-
-                
-            
-                
+                }    
             }
         });
         
                 
                 
                 
-                /* unwind/wind solution
-            if (index == NSNotFound) {
-                NSLog(@"other's event");
-                NSLog(@"%@", [receivedEvent getContent]);
-                NSLog(@"%d", [receivedEvent getCursorLocation]);
-NSLog(@"%d", [receivedEvent getOperation]);
-                
+            /* unwind/wind solution (first idea)
+            if (index == NSNotFound) {                
                 [self redoEventOp:receivedEvent];
                 [globalEvents push:receivedEvent];
             }
             else {
-                NSLog(@"my event");
                 [localRegistrationID removeObjectAtIndex:index];
                 OneEvent* temp = [globalEvents pop];
-                BOOL currentOne = true;
-                
-                NSString* tempStr=@"";
-
-                
-                
-                
+                BOOL currentOne = true;             
                 while([temp getRegistrationID] != submissionRegistrationID) {
-                    NSLog(@"undo %@", temp.getContent);
-                    NSLog(@"undo %d", temp.getCursorLocation);
-
-
                     currentOne = false;
                     [globalEvents unwindPush:temp];
                     [self undoEventOp:temp];
                     temp = [globalEvents pop];
-        tempStr=[_InputBox text];
-        NSLog(@"%@", tempStr);
-    
+                    tempStr=[_InputBox text];    
                 }
                 if (currentOne) {
                 }
                 else {
-                    NSLog(@"undo %@", temp.getContent);
-                    NSLog(@"undo %d", temp.getCursorLocation);
                     [self undoEventOp:temp];
-            tempStr=[_InputBox text];
-            NSLog(@"%@", tempStr);
+                    tempStr=[_InputBox text];
                     OneEvent* temp2;
                     while (![globalEvents unwindEmpty]) {
                         temp2 = [globalEvents unwindPop];
                         [self redoEventOp:temp2];
-                        NSLog(@"redo %@", temp2.getContent);
-                        NSLog(@"redo %d", temp2.getCursorLocation);
-
-
                         [globalEvents push:temp2];
-                tempStr=[_InputBox text];
-                NSLog(@"%@", tempStr);
-
+                        tempStr=[_InputBox text];
                     }
                     [globalEvents push:temp];
                     [self redoEventOp:temp];
-                    NSLog(@"redo %@", temp.getContent);
-                    NSLog(@"redo %d", temp.getCursorLocation);
                     tempStr=[_InputBox text];
-                    NSLog(@"%@", tempStr);
-
-                    
-
                 }
             }*/
-                
-                
-            
-
     }
 }
 
 - (void) redoEventOp: (OneEvent*) event{
     if (![event getOperation]) { //insert redo
-        //NSLog(@"!!!");
         [_InputBox setSelectedRange:NSMakeRange([event getCursorLocation], 0)];
         [_InputBox insertText:[event getContent]];
     }
     else { //delete redo
-        //NSLog(@"???");
         [_InputBox setSelectedRange:NSMakeRange([event getCursorLocation]+1, 0)];
         [_InputBox deleteBackward];
     }
@@ -825,7 +643,7 @@ NSLog(@"%d", [receivedEvent getOperation]);
         NSLog(@"The client cannot recover from this error");
         //update the interface to its default state
     }
-switch ([error classType]) {
+    switch ([error classType]) {
     case CollabrifyClassTypeAddEvent:
     {
         int32_t submissionRegistrationID;
@@ -847,16 +665,8 @@ switch ([error classType]) {
 
 - (BOOL)textView:(IMLCTextView *)textView shouldChangeTextInRange:(NSRange)range replacementText:(NSString *)text
 {
-
-    
-    
-    
-    
     NSString* tempStr=@"";
     tempStr=[textView text];
-    //NSLog(@"%@", tempStr);
-    //NSLog(@"%d", range.location);
-    //NSLog(@"%d", range.length);
     OneEvent* event;
     if (!range.length) {
         event = [[OneEvent alloc]initWithOperation:range.length CursorLocation:range.location Length:1 Content: text];
@@ -866,11 +676,7 @@ switch ([error classType]) {
             event = [[OneEvent alloc]initWithOperation:range.length CursorLocation:range.location Length:1 Content:[tempStr substringWithRange:NSMakeRange(range.location, 1)]];
         }
     }
-    //NSLog(@"%@", event.getContent);
-    //NSLog(@"%d", range.location);
-    //NSLog(@"%d", [event getOperation]);
     NSData* dataSend = [BufferParsing sendEventFormatting:event];
-    NSLog(@"???%@", [event getContent]);
     int32_t registrationID =[[self client] broadcast:dataSend eventType:nil];
     [event setRegistrationID:registrationID];
     
@@ -882,18 +688,8 @@ switch ([error classType]) {
     
     RedoStack* myRedoStack = [RedoStack sharedEvents];
     [myRedoStack clear];
-    
-    NSLog(@"lalalala%d", [event getRegistrationID]);
-    [unconfirmedEvents addObject:event];
-    
-    //AllEvents* globalEvents = [AllEvents sharedEvents];
-
-    
-    //[globalEvents push:event];
-    
-    
+    [unconfirmedEvents addObject:event];    
     [localRegistrationID addObject:[NSNumber numberWithInt:registrationID]];
-    
     if (range.length <= 1)
     {
         return YES;
@@ -901,9 +697,6 @@ switch ([error classType]) {
     
     return NO;
 }
-
-
-
 
 
 @end

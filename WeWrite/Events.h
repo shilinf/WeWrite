@@ -7,7 +7,6 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "Stack.h"
 
 @interface Events : NSObject 
 + (id)sharedEvents;

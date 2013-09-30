@@ -5,7 +5,6 @@
 //
 
 #import "Events.h"
-#import "Stack.h"
 #import "OneEvent.h"
 
 
@@ -47,20 +46,16 @@ static NSMutableArray* allEvents;
 -(void) push:(id)oneObject
 {
     [allEvents addObject:oneObject];
-    //NSLog(@"%d", [allEvents count]);
-    //NSLog(@"%@", oneObject);
 }
 
 -(id) pop
 {
     id item = nil;
-    //NSLog(@"%d", [allEvents count]);
 
     if ([allEvents count] != 0) {
         item = [allEvents lastObject];
         [allEvents removeLastObject];
     }
-    //NSLog(@"%d", [allEvents count]);
     return item;
 }
 -(BOOL)empty

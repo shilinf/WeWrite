@@ -29,17 +29,13 @@
 - (int) getLength;
 - (int32_t) getRegistrationID;
 - (void) setRegistrationID:(int32_t)ID;
-
 - (NSString*) getContent;
-
 - (void) setOrderID: (int64_t) ID;
 - (int64_t) getOrderID;
 - (void) setHelpOrderID: (int64_t) ID;
 - (int64_t) getHelpOrderID;
-
 - (void) setHelpOperation :(int) op;
 - (int) getHelpOperation;
 - (void) setCursorLocation:(int) location;
-
 - (void) setContent :(NSString *)cont;
 @end
