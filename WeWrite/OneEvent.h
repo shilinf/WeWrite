@@ -16,6 +16,7 @@
     NSString* content;
     int32_t registrationID;
     int64_t orderID;
+    int64_t helpOrderID;
     int helperOperation;
 }
 
@@ -33,6 +34,9 @@
 
 - (void) setOrderID: (int64_t) ID;
 - (int64_t) getOrderID;
+- (void) setHelpOrderID: (int64_t) ID;
+- (int64_t) getHelpOrderID;
+
 - (void) setHelpOperation :(int) op;
 - (int) getHelpOperation;
 - (void) setCursorLocation:(int) location;

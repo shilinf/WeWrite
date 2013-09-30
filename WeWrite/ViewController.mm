@@ -529,35 +529,25 @@ static NSMutableArray* localRegistrationID;
                     [_allText insertString:receivedEvent.getContent atIndex:receivedEvent.getCursorLocation];
                     [globalEvents push:receivedEvent];
                 }
-
+                
+                
+                
                 else if (receivedEvent.getOperation == 2) { // Undo
                     NSMutableArray* tempStack = [[NSMutableArray alloc] init];
                     int moved = 0;
                     int countHere = [globalEvents count]-1;
                     OneEvent* temp = [globalEvents get:countHere];
-                    NSLog(@"!!!%lld", [temp getOrderID]);
-                    NSLog(@"???%lld", [receivedEvent getOrderID]);
-
                     while([temp getOrderID]!= [receivedEvent getOrderID]) {
+                        if ([temp getHelpOrderID] != [receivedEvent getOrderID]) {
                         moved++;
                         [tempStack addObject:temp];
+                        }
                         countHere--;
                         temp = [globalEvents get:countHere];
-                        
-                        
                     }
-                    NSLog(@"???");
                     OneEvent* temp1;
-                    
-                    
-                    NSLog(@"+++%d", [temp getCursorLocation]);
                        for(int x=moved-1;x>=0;x--) {
-                           NSLog(@"%d", x);
                                temp1 = [tempStack objectAtIndex:x];
-                           NSLog(@"location%d", [temp1 getCursorLocation]);
-                           NSLog(@"operation%d", [temp1 getOperation]);
-                           NSLog(@"helpoperation%d", [temp1 getHelpOperation]);
-                           NSLog(@"helpoperation%@", [temp1 getContent]);
                                if([temp1 getOperation] == 0 || ([temp1 getOperation]>=2 && [temp1 getHelpOperation] == 0)) {
                                    
                                    if([temp1 getCursorLocation] <= [temp getCursorLocation]) {
@@ -566,48 +556,89 @@ static NSMutableArray* localRegistrationID;
                                    }
                                }
                                else {
-                                   if([temp1 getCursorLocation] <= [temp getCursorLocation]) {
+                                   if([temp1 getCursorLocation] < [temp getCursorLocation]) {
                                        NSLog(@"NO");
                                        [temp setCursorLocation:([temp getCursorLocation]-1)];
                                    }
                                }
                        }
-                    NSLog(@"---%d", [temp getCursorLocation]);
-                    NSLog(@"???222");
-
+                    [receivedEvent setHelpOrderID:[receivedEvent getOrderID]];
                     [receivedEvent setOrderID:orderID];
                     [receivedEvent setCursorLocation:[temp getCursorLocation]];
                     [receivedEvent setContent:[temp getContent]];
 
                 if([temp getOperation] == 0 || ([temp getOperation]>=2 && [temp getHelpOperation] == 0)) { // delete
                     [receivedEvent setHelpOperation:1];
-                    
                     [_allText deleteCharactersInRange:NSMakeRange(receivedEvent.getCursorLocation, 1)];
-
-                    
                 }
                 else { //insert
                     [receivedEvent setHelpOperation:0];
                     [_allText insertString:receivedEvent.getContent atIndex:receivedEvent.getCursorLocation];
 
                 }
-                    
                 [globalEvents push:receivedEvent];
-
-                
-                    
-                    
                 }
+                
+                
+                
                 else if(receivedEvent.getOperation == 3) {
-                
-                
+                    
+                    NSMutableArray* tempStack = [[NSMutableArray alloc] init];
+                    int moved = 0;
+                    int countHere = [globalEvents count]-1;
+                    OneEvent* temp = [globalEvents get:countHere];
+                    while([temp getOrderID]!= [receivedEvent getOrderID]) {
+                    if ([temp getHelpOrderID] != [receivedEvent getOrderID]) {
+                        moved++;
+                        [tempStack addObject:temp];
+                    }
+                        countHere--;
+                        temp = [globalEvents get:countHere];
+                    }
+                    [tempStack addObject:temp];
+                    OneEvent* temp1;
+                    //NSLog(@"cccccccccc%d", moved);
+                    for(int x=moved-1;x>=0;x--) {
+                        temp1 = [tempStack objectAtIndex:x];
+                        if([temp1 getOperation] == 0 || ([temp1 getOperation]>=2 && [temp1 getHelpOperation] == 0)) {
+                            NSLog(@"YES %d", [temp1 getCursorLocation]);
+                            NSLog(@"YES %d", [temp getCursorLocation]);
+                            
+                            if([temp1 getCursorLocation] <= [temp getCursorLocation]) {
+                                NSLog(@"YES");
+                                [temp setCursorLocation:([temp getCursorLocation]+1)];
+                            }
+                        }
+                        else {
+                            if([temp1 getCursorLocation] < [temp getCursorLocation]) {
+                                NSLog(@"NO");
+
+                                [temp setCursorLocation:([temp getCursorLocation]-1)];
+                            }
+                        }
+                    }
+                    [receivedEvent setHelpOrderID:[receivedEvent getOrderID]];
+                    [receivedEvent setOrderID:orderID];
+                    [receivedEvent setCursorLocation:[temp getCursorLocation]];
+                    [receivedEvent setContent:[temp getContent]];
+                    
+                    //if([temp getOperation] == 0 || ([temp getOperation]>=2 && [temp getHelpOperation] == 0)) { // insert
+                        
+                    if([temp getOperation] == 0){
+                        NSLog(@"HERE DO THE REDO InSERT");
+                        [receivedEvent setHelpOperation:0];
+                        [_allText insertString:receivedEvent.getContent atIndex:receivedEvent.getCursorLocation];
+                        
+                    }
+                    else if([temp getOperation] == 1){ //delete
+
+                        [receivedEvent setHelpOperation:1];
+                        [_allText deleteCharactersInRange:NSMakeRange(receivedEvent.getCursorLocation, 1)];
+
+                    }
+                    
+                    [globalEvents push:receivedEvent];
                 }
-                
-                
-                
-                
-                
-                
                 
                 
                 

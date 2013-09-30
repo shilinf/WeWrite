@@ -16,6 +16,7 @@
     if (self) {
         orderID = -1;
         registrationID = -1;
+        helpOrderID = -1;
     }
     return self;
 }
@@ -30,6 +31,7 @@
         content = [aContent copy];
         orderID = -1;
         registrationID = -1;
+        helpOrderID = -1;
     }
     return self;
 }
@@ -93,6 +95,17 @@
 {
     return orderID;
 }
+
+- (void) setHelpOrderID: (int64_t) ID
+{
+    helpOrderID = ID;
+}
+
+- (int64_t) getHelpOrderID
+{
+    return helpOrderID;
+}
+
 
 
 @end
