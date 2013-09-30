@@ -55,6 +55,8 @@
 
 static NSMutableArray* localRegistrationID;
 static NSMutableArray* unconfirmedEvents;
+static NSMutableArray* newComingEvents;
+
 
 
 
@@ -96,6 +98,7 @@ static NSMutableArray* unconfirmedEvents;
     
     localRegistrationID =[[NSMutableArray alloc] init];
     unconfirmedEvents =[[NSMutableArray alloc] init];
+    newComingEvents =[[NSMutableArray alloc] init];
     _timer = [[NSTimer alloc] init];
     
     UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc]
@@ -120,40 +123,34 @@ static NSMutableArray* unconfirmedEvents;
     
     if(![_version isEqualToString:@"Individual"]) {
         _cursorLocation =[_InputBox selectedRange].location;
-        
-    //AllEvents* globalEvents = [AllEvents sharedEvents];
-    //NSMutableString *allText;
-        /*if(_context != nil) {
-    
-            allText= [[NSMutableString alloc] initWithString:nil];
+        OneEvent* temp;
+        for (int i=0; i<[newComingEvents count];i++) {
+            temp = [newComingEvents objectAtIndex:i];
+            if([temp getOperation] == 0 || ([temp getOperation]>=2 && [temp getHelpOperation] == 0)) {
+                
+                if([temp getCursorLocation] <= _cursorLocation) {
+                    NSLog(@"YES");
+                    _cursorLocation++;
+                }
+            }
+            else {
+                if([temp getCursorLocation] < _cursorLocation) {
+                    NSLog(@"NO");
+                    _cursorLocation--;
+                }
+            }
         }
-        else {
-            allText = [[NSMutableString alloc] init];
-        }*/
-    //allText = [[NSMutableString alloc] init];
-    
-    /*for (int i=0;i<[globalEvents count];i++) {
-        NSLog(@"%d", i);
-        OneEvent* currentEvent = [globalEvents get:i];
-        if (currentEvent.getOperation) { // delete
-            [_allText deleteCharactersInRange:NSMakeRange(currentEvent.getCursorLocation, 1)];
+        
+        
 
-        }
-        else{ //insert
-            [_allText insertString:currentEvent.getContent atIndex:currentEvent.getCursorLocation];
-        }
         
-    }*/
-    
-    
-    //[_InputBox setEditable:NO];
         NSString *tempString = [NSString stringWithString:_allText];
         
         NSMutableString *textTemp = [[NSMutableString alloc] initWithString:tempString];
         
 
         int uncommitCount = [unconfirmedEvents count];
-        OneEvent *temp;
+        //OneEvent *temp;
         for(int i=0;i<uncommitCount;i++) {
             temp = [unconfirmedEvents objectAtIndex:i];
             if ([temp getOperation] == 0) {
@@ -164,7 +161,17 @@ static NSMutableArray* unconfirmedEvents;
                 [textTemp deleteCharactersInRange:NSMakeRange(temp.getCursorLocation, 1)];
             }
         }
-    
+        if (uncommitCount != 0) {
+            OneEvent *lastEvent =[unconfirmedEvents objectAtIndex:uncommitCount-1];
+            if([lastEvent getOperation] == 0) {
+                _cursorLocation =[lastEvent getCursorLocation]+1;
+            }
+            else {
+                _cursorLocation =[lastEvent getCursorLocation];
+            }
+                                   
+        }
+        
     
         
         
@@ -175,9 +182,12 @@ static NSMutableArray* unconfirmedEvents;
         [_InputBox setSelectedRange:NSMakeRange(0, _InputBox.text.length)];
         [_InputBox setText:textReplace];
         [_InputBox setSelectedRange:NSMakeRange(_cursorLocation, 0)];
+        [newComingEvents removeAllObjects];
+
     }
     
-    //[_InputBox setEditable:YES];
+    
+        //[_InputBox setEditable:YES];
 
 }
 
@@ -527,6 +537,7 @@ static NSMutableArray* unconfirmedEvents;
 
                 
                 
+                
             /*if([localRegistrationID count] !=0) {
                 index = [localRegistrationID indexOfObject:[NSNumber numberWithInt:submissionRegistrationID]];
                 [localRegistrationID removeObjectAtIndex:index];
@@ -537,10 +548,10 @@ static NSMutableArray* unconfirmedEvents;
                     //NSLog(@"???????%d", uncommitCount);
                     
                 for (int i=0;i<[unconfirmedEvents count];i++) {
-                    NSLog(@"%@", [[unconfirmedEvents objectAtIndex:i] getContent]);
-                      NSLog(@"%d", [unconfirmedEvents count]);
-                    NSLog(@"%d", [[unconfirmedEvents objectAtIndex:i] getRegistrationID]);
-                    NSLog(@"%d", submissionRegistrationID);
+                    //NSLog(@"%@", [[unconfirmedEvents objectAtIndex:i] getContent]);
+                      //NSLog(@"%d", [unconfirmedEvents count]);
+                    //NSLog(@"%d", [[unconfirmedEvents objectAtIndex:i] getRegistrationID]);
+                    //NSLog(@"%d", submissionRegistrationID);
 
                     if ([[unconfirmedEvents objectAtIndex:i] getRegistrationID] == submissionRegistrationID) {
                         [unconfirmedEvents removeObjectAtIndex:i];
@@ -555,7 +566,7 @@ static NSMutableArray* unconfirmedEvents;
                             Events *localEvents = [Events sharedEvents];
                 OneEvent* temp;
                 
-                
+                // updateorderID for confirmed events
                 for(int i=[localEvents count]-1; i>=0;  i--) {
                     if ([[localEvents getIndex:i] getRegistrationID] == submissionRegistrationID) {
                         temp = [localEvents getIndex:i];
@@ -563,7 +574,7 @@ static NSMutableArray* unconfirmedEvents;
                         [localEvents setIndex:temp at:i];
                     }
                 }
-    
+                
         
                 
                 NSLog(@"%lld",orderID);
@@ -700,7 +711,8 @@ static NSMutableArray* unconfirmedEvents;
                 
                 
                 
-                
+                [newComingEvents addObject:receivedEvent];
+
                 
             
                 
