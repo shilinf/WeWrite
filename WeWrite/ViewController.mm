@@ -532,18 +532,20 @@ static NSMutableArray* unconfirmedEvents;
                 [localRegistrationID removeObjectAtIndex:index];
             }
                 
-                if([receivedEvent getOperation]==0 || [receivedEvent getOperation] == 1){
+                if(([receivedEvent getOperation]==0 || [receivedEvent getOperation] == 1 )&& submissionRegistrationID != -1){
                     //if([unconfirmedEvents ])
-                //int uncommitCount = ;
+                int uncommitCount = [unconfirmedEvents count];
                     //NSLog(@"???????%d", uncommitCount);
                     
-                for (int i=0;i<[unconfirmedEvents count];i++) {
-                    //NSLog(@"%@", [[unconfirmedEvents objectAtIndex:i] getContent]);
+                for (int i=0;i<uncommitCount;i++) {
+                    NSLog(@"%@", [[unconfirmedEvents objectAtIndex:i] getContent]);
                     if ([[unconfirmedEvents objectAtIndex:i] getRegistrationID] == submissionRegistrationID) {
                         [unconfirmedEvents removeObjectAtIndex:i];
+                        break;
                     }
                 }
                 }
+                
                 
                 [receivedEvent setRegistrationID:submissionRegistrationID];
                             AllEvents* globalEvents = [AllEvents sharedEvents];
@@ -853,7 +855,7 @@ switch ([error classType]) {
     //NSLog(@"%d", range.location);
     //NSLog(@"%d", [event getOperation]);
     NSData* dataSend = [BufferParsing sendEventFormatting:event];
-    NSLog(@"???%@", dataSend);
+    NSLog(@"???%@", [event getContent]);
     int32_t registrationID =[[self client] broadcast:dataSend eventType:nil];
     [event setRegistrationID:registrationID];
     
