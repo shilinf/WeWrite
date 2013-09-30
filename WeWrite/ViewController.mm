@@ -539,8 +539,8 @@ static NSMutableArray* localRegistrationID;
                     OneEvent* temp = [globalEvents get:countHere];
                     while([temp getOrderID]!= [receivedEvent getOrderID]) {
                         if ([temp getHelpOrderID] != [receivedEvent getOrderID]) {
-                        moved++;
-                        [tempStack addObject:temp];
+                            moved++;
+                            [tempStack addObject:temp];
                         }
                         countHere--;
                         temp = [globalEvents get:countHere];
@@ -588,14 +588,14 @@ static NSMutableArray* localRegistrationID;
                     int countHere = [globalEvents count]-1;
                     OneEvent* temp = [globalEvents get:countHere];
                     while([temp getOrderID]!= [receivedEvent getOrderID]) {
-                    if ([temp getHelpOrderID] != [receivedEvent getOrderID]) {
-                        moved++;
-                        [tempStack addObject:temp];
-                    }
+                        if ([temp getHelpOrderID] != [receivedEvent getOrderID]) {
+                            moved++;
+                            [tempStack addObject:temp];
+                        }
                         countHere--;
                         temp = [globalEvents get:countHere];
                     }
-                    [tempStack addObject:temp];
+                    //[tempStack addObject:temp];
                     OneEvent* temp1;
                     //NSLog(@"cccccccccc%d", moved);
                     for(int x=moved-1;x>=0;x--) {
@@ -617,6 +617,7 @@ static NSMutableArray* localRegistrationID;
                             }
                         }
                     }
+                    
                     [receivedEvent setHelpOrderID:[receivedEvent getOrderID]];
                     [receivedEvent setOrderID:orderID];
                     [receivedEvent setCursorLocation:[temp getCursorLocation]];
