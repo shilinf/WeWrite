@@ -10,18 +10,32 @@
 
 @interface OneEvent : NSObject
 {
-    BOOL operation;
+    int operation;
     int cursorLocation;
     int length;
     NSString* content;
     int32_t registrationID;
+    int64_t orderID;
+    int helperOperation;
 }
 
-- (id) initWithOperation:(BOOL)aOperation CursorLocation:(int)aCursor Length:(int)aLength Content:(NSString*) aContent;
-- (BOOL) getOperation;
+// insert 0, delete 1, undo 2 (0 insert, 1 delete), redo 3 (0 insert, 1 delete)
+
+- (id) initWithOperation:(int)aOperation CursorLocation:(int)aCursor Length:(int)aLength Content:(NSString*) aContent;
+- (int) getOperation;
+- (void) setOperation :(int) op;
 - (int) getCursorLocation;
 - (int) getLength;
 - (int32_t) getRegistrationID;
 - (void) setRegistrationID:(int32_t)ID;
+
 - (NSString*) getContent;
+
+- (void) setOrderID: (int64_t) ID;
+- (int64_t) getOrderID;
+- (void) setHelpOperation :(int) op;
+- (int) getHelpOperation;
+- (void) setCursorLocation:(int) location;
+
+- (void) setContent :(NSString *)cont;
 @end

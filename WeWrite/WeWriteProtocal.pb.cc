@@ -36,7 +36,7 @@ void protobuf_AssignDesc_WeWriteProtocal_2eproto() {
   GOOGLE_CHECK(file != NULL);
   Event_descriptor_ = file->message_type(0);
   static const int Event_offsets_[4] = {
-    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, sequenceid_),
+    GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, orderid_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, eventtype_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, location_),
     GOOGLE_PROTOBUF_GENERATED_MESSAGE_FIELD_OFFSET(Event, content_),
@@ -83,13 +83,12 @@ void protobuf_AddDesc_WeWriteProtocal_2eproto() {
   GOOGLE_PROTOBUF_VERIFY_VERSION;
 
   ::google::protobuf::DescriptorPool::InternalAddGeneratedFile(
-    "\n\025WeWriteProtocal.proto\022\007WeWrite\"\316\001\n\005Eve"
-    "nt\022\022\n\nsequenceId\030\001 \002(\005\0224\n\teventType\030\002 \001("
-    "\0162\030.WeWrite.Event.EventType:\007UNKNOWN\022\020\n\010"
-    "location\030\003 \001(\005\022\017\n\007content\030\004 \001(\t\"X\n\tEvent"
-    "Type\022\013\n\007UNKNOWN\020\000\022\n\n\006INSERT\020\001\022\n\n\006DELETE\020"
-    "\002\022\010\n\004UNDO\020\003\022\010\n\004REDO\020\004\022\022\n\016ACKNOWLEGEMENT\020"
-    "\005", 241);
+    "\n\025WeWriteProtocal.proto\022\007WeWrite\"\313\001\n\005Eve"
+    "nt\022\017\n\007orderId\030\001 \002(\003\0224\n\teventType\030\002 \001(\0162\030"
+    ".WeWrite.Event.EventType:\007UNKNOWN\022\020\n\010loc"
+    "ation\030\003 \001(\005\022\017\n\007content\030\004 \001(\t\"X\n\tEventTyp"
+    "e\022\013\n\007UNKNOWN\020\000\022\n\n\006INSERT\020\001\022\n\n\006DELETE\020\002\022\010"
+    "\n\004UNDO\020\003\022\010\n\004REDO\020\004\022\022\n\016ACKNOWLEGEMENT\020\005", 238);
   ::google::protobuf::MessageFactory::InternalRegisterGeneratedFile(
     "WeWriteProtocal.proto", &protobuf_RegisterTypes);
   Event::default_instance_ = new Event();
@@ -136,7 +135,7 @@ const Event_EventType Event::EventType_MAX;
 const int Event::EventType_ARRAYSIZE;
 #endif  // _MSC_VER
 #ifndef _MSC_VER
-const int Event::kSequenceIdFieldNumber;
+const int Event::kOrderIdFieldNumber;
 const int Event::kEventTypeFieldNumber;
 const int Event::kLocationFieldNumber;
 const int Event::kContentFieldNumber;
@@ -158,7 +157,7 @@ Event::Event(const Event& from)
 
 void Event::SharedCtor() {
   _cached_size_ = 0;
-  sequenceid_ = 0;
+  orderid_ = GOOGLE_LONGLONG(0);
   eventtype_ = 0;
   location_ = 0;
   content_ = const_cast< ::std::string*>(&::google::protobuf::internal::kEmptyString);
@@ -200,7 +199,7 @@ Event* Event::New() const {
 
 void Event::Clear() {
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    sequenceid_ = 0;
+    orderid_ = GOOGLE_LONGLONG(0);
     eventtype_ = 0;
     location_ = 0;
     if (has_content()) {
@@ -219,14 +218,14 @@ bool Event::MergePartialFromCodedStream(
   ::google::protobuf::uint32 tag;
   while ((tag = input->ReadTag()) != 0) {
     switch (::google::protobuf::internal::WireFormatLite::GetTagFieldNumber(tag)) {
-      // required int32 sequenceId = 1;
+      // required int64 orderId = 1;
       case 1: {
         if (::google::protobuf::internal::WireFormatLite::GetTagWireType(tag) ==
             ::google::protobuf::internal::WireFormatLite::WIRETYPE_VARINT) {
           DO_((::google::protobuf::internal::WireFormatLite::ReadPrimitive<
-                   ::google::protobuf::int32, ::google::protobuf::internal::WireFormatLite::TYPE_INT32>(
-                 input, &sequenceid_)));
-          set_has_sequenceid();
+                   ::google::protobuf::int64, ::google::protobuf::internal::WireFormatLite::TYPE_INT64>(
+                 input, &orderid_)));
+          set_has_orderid();
         } else {
           goto handle_uninterpreted;
         }
@@ -306,9 +305,9 @@ bool Event::MergePartialFromCodedStream(
 
 void Event::SerializeWithCachedSizes(
     ::google::protobuf::io::CodedOutputStream* output) const {
-  // required int32 sequenceId = 1;
-  if (has_sequenceid()) {
-    ::google::protobuf::internal::WireFormatLite::WriteInt32(1, this->sequenceid(), output);
+  // required int64 orderId = 1;
+  if (has_orderid()) {
+    ::google::protobuf::internal::WireFormatLite::WriteInt64(1, this->orderid(), output);
   }
 
   // optional .WeWrite.Event.EventType eventType = 2 [default = UNKNOWN];
@@ -339,9 +338,9 @@ void Event::SerializeWithCachedSizes(
 
 ::google::protobuf::uint8* Event::SerializeWithCachedSizesToArray(
     ::google::protobuf::uint8* target) const {
-  // required int32 sequenceId = 1;
-  if (has_sequenceid()) {
-    target = ::google::protobuf::internal::WireFormatLite::WriteInt32ToArray(1, this->sequenceid(), target);
+  // required int64 orderId = 1;
+  if (has_orderid()) {
+    target = ::google::protobuf::internal::WireFormatLite::WriteInt64ToArray(1, this->orderid(), target);
   }
 
   // optional .WeWrite.Event.EventType eventType = 2 [default = UNKNOWN];
@@ -376,11 +375,11 @@ int Event::ByteSize() const {
   int total_size = 0;
 
   if (_has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    // required int32 sequenceId = 1;
-    if (has_sequenceid()) {
+    // required int64 orderId = 1;
+    if (has_orderid()) {
       total_size += 1 +
-        ::google::protobuf::internal::WireFormatLite::Int32Size(
-          this->sequenceid());
+        ::google::protobuf::internal::WireFormatLite::Int64Size(
+          this->orderid());
     }
 
     // optional .WeWrite.Event.EventType eventType = 2 [default = UNKNOWN];
@@ -430,8 +429,8 @@ void Event::MergeFrom(const ::google::protobuf::Message& from) {
 void Event::MergeFrom(const Event& from) {
   GOOGLE_CHECK_NE(&from, this);
   if (from._has_bits_[0 / 32] & (0xffu << (0 % 32))) {
-    if (from.has_sequenceid()) {
-      set_sequenceid(from.sequenceid());
+    if (from.has_orderid()) {
+      set_orderid(from.orderid());
     }
     if (from.has_eventtype()) {
       set_eventtype(from.eventtype());
@@ -466,7 +465,7 @@ bool Event::IsInitialized() const {
 
 void Event::Swap(Event* other) {
   if (other != this) {
-    std::swap(sequenceid_, other->sequenceid_);
+    std::swap(orderid_, other->orderid_);
     std::swap(eventtype_, other->eventtype_);
     std::swap(location_, other->location_);
     std::swap(content_, other->content_);
@@ -484,7 +483,6 @@ void Event::Swap(Event* other) {
   return metadata;
 }
 
-    
 
 // @@protoc_insertion_point(namespace_scope)
 

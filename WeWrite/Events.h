@@ -14,4 +14,7 @@
 - (void)push: (id)oneObject;
 - (id) pop;
 - (BOOL) empty;
+- (id) getIndex: (int) index;
+-(int) count;
+- (void) setIndex: (id) object at: (int) index;
 @end

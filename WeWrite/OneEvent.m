@@ -10,7 +10,17 @@
 
 @implementation OneEvent
 
-- (id) initWithOperation:(BOOL)aOperation CursorLocation:(int)aCursor Length:(int)aLength Content:(NSString*) aContent
+-(id) init
+{
+    self = [super init];
+    if (self) {
+        orderID = -1;
+        registrationID = -1;
+    }
+    return self;
+}
+
+- (id) initWithOperation:(int)aOperation CursorLocation:(int)aCursor Length:(int)aLength Content:(NSString*) aContent
 {
     self = [super init];
     if (self) {
@@ -18,13 +28,29 @@
         cursorLocation = aCursor;
         length = aLength;
         content = [aContent copy];
+        orderID = -1;
+        registrationID = -1;
     }
     return self;
 }
 
+- (void) setHelpOperation :(int) op
+{
+    helperOperation = op;
+}
 
 
-- (BOOL) getOperation {
+- (int) getHelpOperation {
+    return helperOperation;
+}
+
+- (void) setOperation :(int) op
+{
+    operation = op;
+}
+
+
+- (int) getOperation {
     return operation;
 }
 
@@ -45,8 +71,28 @@
     return cursorLocation;
 }
 
+- (void) setCursorLocation:(int) location {
+    cursorLocation = location;
+}
+
+- (void) setContent :(NSString *) cont{
+    content = cont;
+}
+
+
 - (NSString*) getContent {
     return content;
 }
+
+- (void) setOrderID: (int64_t) ID
+{
+    orderID = ID;
+}
+
+- (int64_t) getOrderID
+{
+    return orderID;
+}
+
 
 @end

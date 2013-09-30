@@ -17,16 +17,21 @@
     std::string *cursorLocation = new std::string([[event getContent] UTF8String]);
     eventBuffer.set_content(cursorLocation->c_str());
     WeWrite::Event_EventType eventType;
-    if (![event getOperation]) {
+    if ([event getOperation] == 0) {
         eventType = WeWrite::Event_EventType_INSERT;
     }
-    else {
+    else if([event getOperation] == 1){
         eventType = WeWrite::Event_EventType_DELETE;
+    }
+    else if([event getOperation] == 2){
+        eventType = WeWrite::Event_EventType_UNDO;
+    }
+    else {
+        eventType = WeWrite::Event_EventType_REDO;
     }
     eventBuffer.set_eventtype(eventType);
     
-    //TODO: modify sequenceid
-    eventBuffer.set_sequenceid(10);
+    eventBuffer.set_orderid(event.getOrderID);
     return dataForMessageWeWrite(eventBuffer);
 }
 
@@ -35,14 +40,21 @@
     WeWrite::Event eventBuffer;
     parseDelimitedMessageFromDataWeWrite(eventBuffer, data);
     OneEvent* resultEvent;
-    BOOL op;
+    int op = -1;
     if (eventBuffer.eventtype() == WeWrite::Event_EventType_INSERT) {
-        op = false;
+        op = 0;
     }
-    else {
-        op = true;
+    else if (eventBuffer.eventtype() == WeWrite::Event_EventType_DELETE){
+        op = 1;
+    }
+    else if (eventBuffer.eventtype() == WeWrite::Event_EventType_UNDO){
+        op = 2;
+    }
+    else if (eventBuffer.eventtype() == WeWrite::Event_EventType_REDO){
+        op = 3;
     }
     resultEvent = [[OneEvent alloc] initWithOperation:op CursorLocation:eventBuffer.location() Length:1 Content:[NSString stringWithUTF8String:eventBuffer.content().c_str()]];
+    [resultEvent setOrderID:eventBuffer.orderid()];
     return resultEvent;
 }
 

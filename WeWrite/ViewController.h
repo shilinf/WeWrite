@@ -13,8 +13,13 @@
 
 @interface ViewController : UIViewController <UITextViewDelegate, UIAlertViewDelegate>
 
+@property (strong, nonatomic) NSString *version;
+@property NSUInteger cursorLocation;
+//@property NSUInteger count;
+//@property (strong, nonatomic) NSString *context;
 @property (strong, nonatomic) NSTimer *timer;
-@property (weak, nonatomic) NSString *sessionName;
+@property (strong, nonatomic) NSString *sessionName;
+@property (strong, nonatomic) NSMutableString *allText;
 - (void) redoEventOp: (OneEvent*) event;
 - (void) undoEventOp: (OneEvent*) event;
 

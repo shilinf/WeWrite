@@ -143,12 +143,12 @@ class Event : public ::google::protobuf::Message {
 
   // accessors -------------------------------------------------------
 
-  // required int32 sequenceId = 1;
-  inline bool has_sequenceid() const;
-  inline void clear_sequenceid();
-  static const int kSequenceIdFieldNumber = 1;
-  inline ::google::protobuf::int32 sequenceid() const;
-  inline void set_sequenceid(::google::protobuf::int32 value);
+  // required int64 orderId = 1;
+  inline bool has_orderid() const;
+  inline void clear_orderid();
+  static const int kOrderIdFieldNumber = 1;
+  inline ::google::protobuf::int64 orderid() const;
+  inline void set_orderid(::google::protobuf::int64 value);
 
   // optional .WeWrite.Event.EventType eventType = 2 [default = UNKNOWN];
   inline bool has_eventtype() const;
@@ -178,8 +178,8 @@ class Event : public ::google::protobuf::Message {
 
   // @@protoc_insertion_point(class_scope:WeWrite.Event)
  private:
-  inline void set_has_sequenceid();
-  inline void clear_has_sequenceid();
+  inline void set_has_orderid();
+  inline void clear_has_orderid();
   inline void set_has_eventtype();
   inline void clear_has_eventtype();
   inline void set_has_location();
@@ -189,10 +189,10 @@ class Event : public ::google::protobuf::Message {
 
   ::google::protobuf::UnknownFieldSet _unknown_fields_;
 
-  ::google::protobuf::int32 sequenceid_;
+  ::google::protobuf::int64 orderid_;
   int eventtype_;
-  ::std::string* content_;
   ::google::protobuf::int32 location_;
+  ::std::string* content_;
 
   mutable int _cached_size_;
   ::google::protobuf::uint32 _has_bits_[(4 + 31) / 32];
@@ -211,26 +211,26 @@ class Event : public ::google::protobuf::Message {
 
 // Event
 
-// required int32 sequenceId = 1;
-inline bool Event::has_sequenceid() const {
+// required int64 orderId = 1;
+inline bool Event::has_orderid() const {
   return (_has_bits_[0] & 0x00000001u) != 0;
 }
-inline void Event::set_has_sequenceid() {
+inline void Event::set_has_orderid() {
   _has_bits_[0] |= 0x00000001u;
 }
-inline void Event::clear_has_sequenceid() {
+inline void Event::clear_has_orderid() {
   _has_bits_[0] &= ~0x00000001u;
 }
-inline void Event::clear_sequenceid() {
-  sequenceid_ = 0;
-  clear_has_sequenceid();
+inline void Event::clear_orderid() {
+  orderid_ = GOOGLE_LONGLONG(0);
+  clear_has_orderid();
 }
-inline ::google::protobuf::int32 Event::sequenceid() const {
-  return sequenceid_;
+inline ::google::protobuf::int64 Event::orderid() const {
+  return orderid_;
 }
-inline void Event::set_sequenceid(::google::protobuf::int32 value) {
-  set_has_sequenceid();
-  sequenceid_ = value;
+inline void Event::set_orderid(::google::protobuf::int64 value) {
+  set_has_orderid();
+  orderid_ = value;
 }
 
 // optional .WeWrite.Event.EventType eventType = 2 [default = UNKNOWN];

@@ -1,7 +1,7 @@
 package WeWrite;
 
 message Event {
-    required int32 sequenceId = 1;
+    required int64 orderId = 1;
     enum EventType{
         UNKNOWN = 0;
         INSERT = 1;

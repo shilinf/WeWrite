@@ -29,6 +29,21 @@ static NSMutableArray* allEvents;
     return self;
 }
 
+- (int) count
+{
+    return [allEvents count];
+}
+
+- (id) getIndex: (int) index
+{
+    return [allEvents objectAtIndex:index];
+}
+
+- (void) setIndex: (id) object at: (int) index
+{
+    [allEvents setObject:object atIndexedSubscript:index];
+}
+
 -(void) push:(id)oneObject
 {
     [allEvents addObject:oneObject];
