@@ -546,11 +546,15 @@ static NSMutableArray* localRegistrationID;
                         temp = [globalEvents get:countHere];
                     }
                     OneEvent* temp1;
+                    int cursorInit = [temp getCursorLocation];
                        for(int x=moved-1;x>=0;x--) {
                                temp1 = [tempStack objectAtIndex:x];
                                if([temp1 getOperation] == 0 || ([temp1 getOperation]>=2 && [temp1 getHelpOperation] == 0)) {
                                    
                                    if([temp1 getCursorLocation] <= [temp getCursorLocation]) {
+                                       NSLog(@"YES %d", [temp1 getCursorLocation]);
+                                       NSLog(@"YES %d", [temp getCursorLocation]);
+
                                        NSLog(@"YES");
                                        [temp setCursorLocation:([temp getCursorLocation]+1)];
                                    }
@@ -562,6 +566,7 @@ static NSMutableArray* localRegistrationID;
                                    }
                                }
                        }
+                    [temp setCursorLocation:cursorInit];
                     [receivedEvent setHelpOrderID:[receivedEvent getOrderID]];
                     [receivedEvent setOrderID:orderID];
                     [receivedEvent setCursorLocation:[temp getCursorLocation]];
@@ -597,7 +602,8 @@ static NSMutableArray* localRegistrationID;
                     }
                     //[tempStack addObject:temp];
                     OneEvent* temp1;
-                    //NSLog(@"cccccccccc%d", moved);
+                    int cursorInit = [temp getCursorLocation];
+                    NSLog(@"cccccccccc%d", moved);
                     for(int x=moved-1;x>=0;x--) {
                         temp1 = [tempStack objectAtIndex:x];
                         if([temp1 getOperation] == 0 || ([temp1 getOperation]>=2 && [temp1 getHelpOperation] == 0)) {
@@ -618,6 +624,7 @@ static NSMutableArray* localRegistrationID;
                         }
                     }
                     
+                    [temp setCursorLocation:cursorInit];
                     [receivedEvent setHelpOrderID:[receivedEvent getOrderID]];
                     [receivedEvent setOrderID:orderID];
                     [receivedEvent setCursorLocation:[temp getCursorLocation]];
