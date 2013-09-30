@@ -566,11 +566,11 @@ static NSMutableArray* localRegistrationID;
                                    }
                                }
                        }
-                    [temp setCursorLocation:cursorInit];
                     [receivedEvent setHelpOrderID:[receivedEvent getOrderID]];
                     [receivedEvent setOrderID:orderID];
                     [receivedEvent setCursorLocation:[temp getCursorLocation]];
                     [receivedEvent setContent:[temp getContent]];
+                    [temp setCursorLocation:cursorInit];
 
                 if([temp getOperation] == 0 || ([temp getOperation]>=2 && [temp getHelpOperation] == 0)) { // delete
                     [receivedEvent setHelpOperation:1];
@@ -624,12 +624,12 @@ static NSMutableArray* localRegistrationID;
                         }
                     }
                     
-                    [temp setCursorLocation:cursorInit];
                     [receivedEvent setHelpOrderID:[receivedEvent getOrderID]];
                     [receivedEvent setOrderID:orderID];
                     [receivedEvent setCursorLocation:[temp getCursorLocation]];
                     [receivedEvent setContent:[temp getContent]];
-                    
+                    [temp setCursorLocation:cursorInit];
+
                     //if([temp getOperation] == 0 || ([temp getOperation]>=2 && [temp getHelpOperation] == 0)) { // insert
                         
                     if([temp getOperation] == 0){
